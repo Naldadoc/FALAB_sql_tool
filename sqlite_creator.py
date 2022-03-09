@@ -58,10 +58,66 @@ class DB_sqlite():
         return result
 
     def insert_record(self,table,record):
+        '''
+
+        :param table:
+        :param record:
+        :return:
+        '''
+        string_value = str()
+        for i in record:
+            string_value += i
+            string_value +=','
+            pass
+        # Connessione al Database
+        db = sqlite3.connect('{path}\\{db}'.format(path=self.path,db = self.db_name))
+        #creazione del cursore
+        cursor_db = self.db.cursor()
+        #crea
+        #esecuzione comando
+        cursor_db.execute("ALTER TABLE IF EXISTS {table} ADD {col_name} {data_type} {spec}".format(table=table,
+        col_name=name, data_type=type, spec=spec))
+        # Disconnessione dal DB
+        db.close()
+        result =  + name + ' added'
         return
 
     def change_record(self,table,loc,record):
-        return
+        '''
+        La funzione modifica un record già esistente nella tabella selezionata
+        :param table:
+        :param loc:
+        :param record:
+        :return:
+        '''
+        # Connessione al Database
+        db = sqlite3.connect('{path}\\{db}'.format(path=self.path,db = self.db_name))
+        #creazione del cursore
+        cursor_db = self.db.cursor()
+        #esecuzione comando
+        cursor_db.execute("INSERT INTO {table} VALUES ({values})".format(table = table,values=string_value))
+        # Disconnessione dal DB
+        db.close()
+        result = 'Column' + string_value + ' added'
+        return result
+
     def delete_record(self,table,loc,record):
-        return
+        '''
+        :param table:
+        :param loc:
+        :param record:
+        :return:
+        '''
+
+        # Connessione al Database
+        db = sqlite3.connect('{path}\\{db}'.format(path=self.path,db = self.db_name))
+        #creazione del cursore
+        cursor_db = self.db.cursor()
+        #esecuzione comando
+        cursor_db.execute("ALTER TABLE IF EXISTS {table} ADD {col_name} {data_type} {spec}".format(table=table,
+        col_name=name, data_type=type, spec=spec))
+        # Disconnessione dal DB
+        db.close()
+        result = 'Column' + name + ' added'
+        return result
     pass
