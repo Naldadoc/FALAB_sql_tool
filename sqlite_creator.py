@@ -66,34 +66,58 @@ class DB_sqlite():
         :param table: Nome Tabella
         :return: Ritorna la lista delle colonne della tabella
         '''
+        column = list()
         db = sqlite3.connect('{path}{separatore}{db}'.format(path=self.path,separatore=self.separatore,db = self.db_name))
         #creazione del cursore
         cursor_db = db.cursor()
-        #Sanity check
-        cursor_db.execute("SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = {table}".format(table=table))
-        columns = cursor_db.fetchall()
+        # Ricerca colonne nomi
+        data = cursor_db.execute("SELECT * FROM {table}".format(table=table))
+        for col in data.description:
+            column.append(col[0])
+            pass
         # Disconnessione dal DB
         db.close()
 
-        return columns
+        return column
 
     def insert_record(self,table,record):
         '''
 
-        :param table:
+        :param table: Nome tabella
         :param record: Dictonary based on column name
         :return:
         '''
+        columns = ''
+        values = []
+        # Creazione stringa SQL
+        for i in record.keys():
+            if i == 'id':
+                pass
+            else:
+                if columns == '':
+                    columns = i
+                    sql_val = '?'
+                    pass
+                else:
+                    columns = columns + ',' + ' ' + i
+                    sql_val = sql_val + ',' + '?'
+                    pass
 
+                values.append(record[i])
+                pass
+            pass
+        values = tuple(values)
+        sql = "INSERT INTO {table} ({columns}) VALUES ({values})".format(table=table,columns=columns,values=values)
         # Connessione al Database
         db = sqlite3.connect('{path}{separatore}{db}'.format(path=self.path,separatore=self.separatore,db = self.db_name))
         #creazione del cursore
         cursor_db = db.cursor()
-        #Sanity check
-        cursor_db.execute("SELECT COLUMN_NAME, DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = {table}".format(table=table))
-        columns = cursor_db.fetchall()
-        #esecuzione comando inserimento valore
-        #cursor_db.execute("")
+        # esecuzione comando inserimento valore
+        cursor_db.execute(sql)
+        db.commit()
+        cursor_db.execute('SELECT * FROM Analisi')
+        list = cursor_db.fetchall()
+        print(list)
         # Disconnessione dal DB
         db.close()
         return

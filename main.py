@@ -31,10 +31,9 @@ if __name__ == '__main__':
     FALAB_DB = sqlite_creator.DB_sqlite(PATH,'FALAB_db.db',separatore)
     FALAB_DB.create_table('Analisi')
     FALAB_DB.add_col('Analisi','Care','INT','NOT NULL DEFAULT 1')
-    col = FALAB_DB.retrieve_col('Analisi')
-    print(col)
     FALAB_DB.add_col('Analisi','Note','CHAR')
     col = FALAB_DB.retrieve_col('Analisi')
-    print(col)
+    record = {'Care':[1234],'Note':'ciao'}
+    FALAB_DB.insert_record('Analisi',record)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
