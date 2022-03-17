@@ -33,7 +33,15 @@ if __name__ == '__main__':
     FALAB_DB.add_col('Analisi','Care','INT','NOT NULL DEFAULT 1')
     FALAB_DB.add_col('Analisi','Note','CHAR')
     col = FALAB_DB.retrieve_col('Analisi')
-    record = {'Care':[1234],'Note':'ciao'}
+    record = {'Care':1234,'Note':'ciao'}
     FALAB_DB.insert_record('Analisi',record)
+    record ={'Care':76,'Note':'mondo'}
+    FALAB_DB.insert_record('Analisi',record)
+    FALAB_DB.show_records('Analisi')
+    record['Care'] = 4321
+    FALAB_DB.change_record('Analisi',1,record)
+    FALAB_DB.show_records('Analisi')
+    FALAB_DB.delete_record('Analisi',2)
+    FALAB_DB.show_records('Analisi')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/

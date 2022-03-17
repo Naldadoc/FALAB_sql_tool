@@ -30,7 +30,7 @@ class DB_sqlite():
         #creazione del cursore
         cursor_db = db.cursor()
         #esecuzione comando
-        cursor_db.execute("CREATE TABLE IF NOT EXISTS {name_tab} (id int AUTO_INCREMENT,PRIMARY KEY (id))".format(
+        cursor_db.execute("CREATE TABLE IF NOT EXISTS {name_tab} (id INTEGER PRIMARY KEY)".format(
             name_tab=table_name))
         db.commit()
         # Disconnessione dal DB
@@ -107,7 +107,7 @@ class DB_sqlite():
                 pass
             pass
         values = tuple(values)
-        sql = "INSERT INTO {table} ({columns}) VALUES ({values})".format(table=table,columns=columns,values=values)
+        sql = "INSERT INTO {table} ({columns}) VALUES {values}".format(table=table,columns=columns,values=values)
         # Connessione al Database
         db = sqlite3.connect('{path}{separatore}{db}'.format(path=self.path,separatore=self.separatore,db = self.db_name))
         #creazione del cursore
@@ -115,9 +115,6 @@ class DB_sqlite():
         # esecuzione comando inserimento valore
         cursor_db.execute(sql)
         db.commit()
-        cursor_db.execute('SELECT * FROM Analisi')
-        list = cursor_db.fetchall()
-        print(list)
         # Disconnessione dal DB
         db.close()
         return
@@ -134,15 +131,24 @@ class DB_sqlite():
         db = sqlite3.connect('{path}{separatore}{db}'.format(path=self.path,separatore=self.separatore,db = self.db_name))
         #creazione del cursore
         cursor_db = db.cursor()
+        for i in record.keys():
+            value = record[i]
+            if type(value) is str:
+                value = '\''+value+'\''
+                pass
+            sql = "UPDATE {table} SET {column} = {value} WHERE {table}.id = {loc}".format(table=table,
+                                                                                      column=i,
+                                                                                      value=value,
+                                                                                      loc=loc)
+            cursor_db.execute(sql)
+            pass
         #esecuzione comando
-        cursor_db.execute("INSERT INTO {table} VALUES ({values})".format(table = table,values='string_value'))
         db.commit()
         # Disconnessione dal DB
         db.close()
-        result = 'Column'
-        return result
+        return
 
-    def delete_record(self,table,loc,record):
+    def delete_record(self,table,loc):
         '''
         :param table:
         :param loc:
@@ -153,11 +159,22 @@ class DB_sqlite():
         # Connessione al Database
         db = sqlite3.connect('{path}{separatore}{db}'.format(path=self.path,separatore=self.separatore,db = self.db_name))
         #creazione del cursore
-        cursor_db = self.db.cursor()
+        cursor_db = db.cursor()
         #esecuzione comando
-        cursor_db.execute('Delete record statement')
+        cursor_db.execute('DELETE FROM {table} WHERE {table}.id = {loc}'.format(table=table,loc=loc))
         db.commit()
         # Disconnessione dal DB
         db.close()
+        return
+    def show_records(self,table):
+
+        # Connessione al Database
+        db = sqlite3.connect('{path}{separatore}{db}'.format(path=self.path,separatore=self.separatore,db = self.db_name))
+        #creazione del cursore
+        cursor_db = db.cursor()
+        #SQL command
+        cursor_db.execute('SELECT * FROM {table}'.format(table=table))
+        list = cursor_db.fetchall()
+        print(list)
         return
     pass
