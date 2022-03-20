@@ -46,18 +46,27 @@ class DB_sqlite():
         La funzione aggiunge una colonna alla tabella di riferimento
         :return result: string of execution
         '''
+        col = self.retrieve_col(table)
+        if col.__contains__(name):
 
-        # Connessione al Database
-        db = sqlite3.connect('{path}{separatore}{db}'.format(path=self.path,separatore=self.separatore,db = self.db_name))
-        #creazione del cursore
-        cursor_db = db.cursor()
-        #esecuzione comando
-        cursor_db.execute("ALTER TABLE {table} ADD {col_name} {data_type} {spec}".format(table=table,
-        col_name=name, data_type=type, spec=spec))
-        db.commit()
-        # Disconnessione dal DB
-        db.close()
-        result = 'Column' + name + ' added'
+            result = 'Column {name} already present'.format(name=name)
+
+            pass
+        else:
+
+            # Connessione al Database
+            db = sqlite3.connect('{path}{separatore}{db}'.format(path=self.path,separatore=self.separatore,db = self.db_name))
+            #creazione del cursore
+            cursor_db = db.cursor()
+            #esecuzione comando
+            cursor_db.execute("ALTER TABLE {table} ADD {col_name} {data_type} {spec}".format(table=table,
+            col_name=name, data_type=type, spec=spec))
+            db.commit()
+            # Disconnessione dal DB
+            db.close()
+            result = 'Column' + name + ' added'
+            pass
+
         return result
 
     def retrieve_col(self, table):
@@ -82,7 +91,7 @@ class DB_sqlite():
 
     def insert_record(self,table,record):
         '''
-
+        La funzione agginge un record ad una tabella
         :param table: Nome tabella
         :param record: Dictonary based on column name
         :return:
@@ -96,11 +105,9 @@ class DB_sqlite():
             else:
                 if columns == '':
                     columns = i
-                    sql_val = '?'
                     pass
                 else:
                     columns = columns + ',' + ' ' + i
-                    sql_val = sql_val + ',' + '?'
                     pass
 
                 values.append(record[i])
@@ -122,9 +129,9 @@ class DB_sqlite():
     def change_record(self,table,loc,record):
         '''
         La funzione modifica un record esistente nella tabella selezionata
-        :param table:
-        :param loc:
-        :param record:
+        :param table: Nome Tabella type STRING
+        :param loc: indice della tabella da modificare type INT
+        :param record: Lista dei nuovi parametri type Dict()
         :return:
         '''
         # Connessione al Database
@@ -150,9 +157,9 @@ class DB_sqlite():
 
     def delete_record(self,table,loc):
         '''
-        :param table:
-        :param loc:
-        :param record:
+        La funzione cancella un record della tabella
+        :param table: Nome tabella type STRING
+        :param loc: Indice record da eliminare type INT
         :return:
         '''
 
@@ -166,15 +173,26 @@ class DB_sqlite():
         # Disconnessione dal DB
         db.close()
         return
-    def show_records(self,table):
 
+    def show_records(self,table, loc=0):
+        '''
+        :param loc: indice da visualizzare di defaul 0
+        :param table: Nome tabella type STRING
+        :return: tabella completa
+        '''
         # Connessione al Database
         db = sqlite3.connect('{path}{separatore}{db}'.format(path=self.path,separatore=self.separatore,db = self.db_name))
         #creazione del cursore
         cursor_db = db.cursor()
         #SQL command
-        cursor_db.execute('SELECT * FROM {table}'.format(table=table))
+        if loc == 0:
+
+            cursor_db.execute('SELECT * FROM {table}'.format(table=table))
+            pass
+        else:
+            cursor_db.execute('SELECT * FROM {table} WHERE {table}.id = {loc}'.format(table=table,loc=loc))
+            pass
+
         list = cursor_db.fetchall()
-        print(list)
-        return
+        return list
     pass

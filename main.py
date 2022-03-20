@@ -29,19 +29,20 @@ if __name__ == '__main__':
     print_hi('PyCharm run on {system} OS'.format(system=system))
     #create new db
     FALAB_DB = sqlite_creator.DB_sqlite(PATH,'FALAB_db.db',separatore)
+    #create tabelle
     FALAB_DB.create_table('Analisi')
-    FALAB_DB.add_col('Analisi','Care','INT','NOT NULL DEFAULT 1')
-    FALAB_DB.add_col('Analisi','Note','CHAR')
-    col = FALAB_DB.retrieve_col('Analisi')
-    record = {'Care':1234,'Note':'ciao'}
-    FALAB_DB.insert_record('Analisi',record)
-    record ={'Care':76,'Note':'mondo'}
-    FALAB_DB.insert_record('Analisi',record)
-    FALAB_DB.show_records('Analisi')
-    record['Care'] = 4321
-    FALAB_DB.change_record('Analisi',1,record)
-    FALAB_DB.show_records('Analisi')
-    FALAB_DB.delete_record('Analisi',2)
-    FALAB_DB.show_records('Analisi')
-
+    FALAB_DB.create_table('Utenti')
+    FALAB_DB.create_table('Immagini')
+    FALAB_DB.create_table('Eventi')
+    #Definizione colonne Utenti
+    FALAB_DB.add_col('Utenti','Nome','CHAR', 'NOT NULL')
+    FALAB_DB.add_col('Utenti', 'Cognome', 'CHAR', 'NOT NULL')
+    FALAB_DB.add_col('Utenti', 'Password', 'CHAR', 'NOT NULL')
+    FALAB_DB.add_col('Utenti', 'Privilegi', 'CHAR', 'NOT NULL')
+    #inserimento utente Base
+    record_base = {'Nome':'Admin','Cognome':'root','Password':'Root','Privilegi':'admin'}
+    FALAB_DB.insert_record('Utenti',record_base)
+    records = FALAB_DB.show_records('Utenti')
+    print(records)
+    pass
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
