@@ -6,6 +6,10 @@
 import platform
 import sqlite_creator
 import os
+import kivy
+from kivymd.app import MDApp
+
+
 #global variables
 system = platform.system()
 PATH = os.getcwd()
@@ -17,6 +21,12 @@ else:
     separatore = '/'
     pass
 
+class FALAB_DatabaseApp(MDApp):
+    def build(self):
+        self.theme_cls.primary_palette = 'Blue'
+        self.theme_cls.accent_palette = 'Yellow'
+        return
+    pass
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
@@ -37,12 +47,14 @@ if __name__ == '__main__':
     #Definizione colonne Utenti
     FALAB_DB.add_col('Utenti','Nome','CHAR', 'NOT NULL')
     FALAB_DB.add_col('Utenti', 'Cognome', 'CHAR', 'NOT NULL')
+    FALAB_DB.add_col('Utenti', 'Username', 'CHAR', 'NOT NULL')
     FALAB_DB.add_col('Utenti', 'Password', 'CHAR', 'NOT NULL')
     FALAB_DB.add_col('Utenti', 'Privilegi', 'CHAR', 'NOT NULL')
     #inserimento utente Base
-    record_base = {'Nome':'Admin','Cognome':'root','Password':'Root','Privilegi':'admin'}
+    record_base = {'Nome':'Admin','Cognome':'root','Username':'admin','Password':'Root','Privilegi':'admin'}
     FALAB_DB.insert_record('Utenti',record_base)
     records = FALAB_DB.show_records('Utenti')
     print(records)
+    FALAB_DatabaseApp().run()
     pass
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
