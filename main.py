@@ -41,18 +41,25 @@ if __name__ == '__main__':
     FALAB_DB = sqlite_creator.DB_sqlite(PATH,'FALAB_db.db',separatore)
     #create tabelle
     FALAB_DB.create_table('Analisi')
+    FALAB_DB.create_table('Category')
     FALAB_DB.create_table('Utenti')
     FALAB_DB.create_table('Immagini')
     FALAB_DB.create_table('Eventi')
     #Definizione colonne Utenti
-    FALAB_DB.add_col('Utenti','Nome','CHAR', 'NOT NULL')
-    FALAB_DB.add_col('Utenti', 'Cognome', 'CHAR', 'NOT NULL')
-    FALAB_DB.add_col('Utenti', 'Username', 'CHAR', 'NOT NULL')
-    FALAB_DB.add_col('Utenti', 'Password', 'CHAR', 'NOT NULL')
-    FALAB_DB.add_col('Utenti', 'Privilegi', 'CHAR', 'NOT NULL')
+    FALAB_DB.add_col('Utenti','Nome','CHAR', 'NOT NULL DEFAULT \'Missing\'')
+    FALAB_DB.add_col('Utenti', 'Cognome', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
+    FALAB_DB.add_col('Utenti', 'Username', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
+    FALAB_DB.add_col('Utenti', 'Password', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
+    FALAB_DB.add_col('Utenti', 'Privilegi', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
+
+    #Definizione colonne Analisi
+    #Definizione colonne Category
+    #Definizione colonne Immagini
+    #Definizione colonne Eventi
     #inserimento utente Base
+
     record_base = {'Nome':'Admin','Cognome':'root','Username':'admin','Password':'Root','Privilegi':'admin'}
-    FALAB_DB.insert_record('Utenti',record_base)
+    FALAB_DB.insert_record('Utenti', record_base)
     records = FALAB_DB.show_records('Utenti')
     print(records)
     FALAB_DatabaseApp().run()
