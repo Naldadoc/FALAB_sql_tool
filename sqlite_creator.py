@@ -195,4 +195,22 @@ class DB_sqlite():
 
         list = cursor_db.fetchall()
         return list
+
+    def search_loc(self, table, col, condition):
+        '''
+
+        :param table: tabella in cui eseguire la ricerca type: STRING
+        :param col: colonna su cui eseguire la ricerca
+        :param condition: Condizione di ricerca - type:String
+        :return loc: Lista degli indici che corrispondono alla condizione type: list
+        '''
+        loc = []
+        # Connessione al Database
+        db = sqlite3.connect('{path}{separatore}{db}'.format(path=self.path,separatore=self.separatore,db = self.db_name))
+        #creazione del cursore
+        cursor_db = db.cursor()
+        # Esecuzione comando di ricerca
+        cursor_db.execute('SELECT {table}.id FROM {table} WHERE {table}.{col} = \'{condition}\''.format(table = table, col = col, condition = condition))
+        loc = cursor_db.fetchall()
+        return loc
     pass

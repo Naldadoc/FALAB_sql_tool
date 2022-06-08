@@ -25,6 +25,7 @@ class FALAB_DatabaseApp(MDApp):
     def build(self):
         self.theme_cls.primary_palette = 'Blue'
         self.theme_cls.accent_palette = 'Yellow'
+        self.theme_cls.theme_style = 'Dark'
         return
     pass
 
@@ -37,29 +38,32 @@ def print_hi(name):
 if __name__ == '__main__':
 
     print_hi('PyCharm run on {system} OS'.format(system=system))
-    #create new db
+    # create new db
     FALAB_DB = sqlite_creator.DB_sqlite(PATH,'FALAB_db.db',separatore)
-    #create tabelle
+    # create tabelle
     FALAB_DB.create_table('Analisi')
     FALAB_DB.create_table('Category')
     FALAB_DB.create_table('Utenti')
     FALAB_DB.create_table('Immagini')
     FALAB_DB.create_table('Eventi')
-    #Definizione colonne Utenti
+    # Definizione colonne Utenti
     FALAB_DB.add_col('Utenti','Nome','CHAR', 'NOT NULL DEFAULT \'Missing\'')
     FALAB_DB.add_col('Utenti', 'Cognome', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
     FALAB_DB.add_col('Utenti', 'Username', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
     FALAB_DB.add_col('Utenti', 'Password', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
     FALAB_DB.add_col('Utenti', 'Privilegi', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
 
-    #Definizione colonne Analisi
-    #Definizione colonne Category
-    #Definizione colonne Immagini
-    #Definizione colonne Eventi
-    #inserimento utente Base
+    # Definizione colonne Analisi
+    # Definizione colonne Category
+    # Definizione colonne Immagini
+    # Definizione colonne Eventi
 
+    # Inserimento utente Base
     record_base = {'Nome':'Admin','Cognome':'root','Username':'admin','Password':'Root','Privilegi':'admin'}
-    FALAB_DB.insert_record('Utenti', record_base)
+    l = FALAB_DB.search_loc('Utenti', 'Nome', 'Admin')
+    if not l:
+        FALAB_DB.insert_record('Utenti', record_base)
+        pass
     records = FALAB_DB.show_records('Utenti')
     print(records)
     FALAB_DatabaseApp().run()
