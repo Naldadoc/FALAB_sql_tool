@@ -194,6 +194,7 @@ class DB_sqlite():
             pass
 
         list = cursor_db.fetchall()
+        db.close()
         return list
 
     def search_loc(self, table, col, condition):
@@ -211,6 +212,11 @@ class DB_sqlite():
         cursor_db = db.cursor()
         # Esecuzione comando di ricerca
         cursor_db.execute('SELECT {table}.id FROM {table} WHERE {table}.{col} = \'{condition}\''.format(table = table, col = col, condition = condition))
-        loc = cursor_db.fetchall()
+        out = cursor_db.fetchall()
+        db.close()
+        # Crazione della lista delle posizioni
+        for i in out:
+            loc.append(i[0])
+            pass
         return loc
     pass
