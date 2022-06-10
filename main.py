@@ -54,6 +54,10 @@ if __name__ == '__main__':
     FALAB_DB.add_col('Utenti', 'Privilegi', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
 
     # Definizione colonne Analisi
+    FALAB_DB.add_col('Analisi','Data','DATETIME')
+    FALAB_DB.add_col('Analisi', 'Care', 'INT','NOT NULL DEFAULT \'00000000\'')
+    FALAB_DB.add_col('Analisi', '\'Part Number\'', 'CHAR')
+    FALAB_DB.add_col('Analisi', '\'Serial Number\'', 'INT', 'NOT NULL DEFAULT \'0000000000\'')
     # Definizione colonne Category
     # Definizione colonne Immagini
     # Definizione colonne Eventi
