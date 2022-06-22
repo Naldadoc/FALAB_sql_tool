@@ -27,6 +27,9 @@ class FALAB_DatabaseApp(MDApp):
         self.theme_cls.accent_palette = 'Yellow'
         self.theme_cls.theme_style = 'Dark'
         return
+    def button_screen(self):
+        print_hi('Ciao')
+        return
     pass
 
 def print_hi(name):
@@ -55,9 +58,16 @@ if __name__ == '__main__':
 
     # Definizione colonne Analisi
     FALAB_DB.add_col('Analisi','Data','DATETIME')
+    FALAB_DB.add_col('Analisi','Utente','CHAR')
     FALAB_DB.add_col('Analisi', 'Care', 'INT','NOT NULL DEFAULT \'00000000\'')
-    FALAB_DB.add_col('Analisi', '\'Part Number\'', 'CHAR')
-    FALAB_DB.add_col('Analisi', '\'Serial Number\'', 'INT', 'NOT NULL DEFAULT \'0000000000\'')
+    FALAB_DB.add_col('Analisi', 'Part_Number', 'CHAR')
+    FALAB_DB.add_col('Analisi', 'Serial_Number', 'INT', 'NOT NULL DEFAULT \'0000000000\'')
+    FALAB_DB.add_col('Analisi', 'Difetto', 'CHAR')
+    FALAB_DB.add_col('Analisi', 'Sub_Group', 'CHAR')
+    FALAB_DB.add_col('Analisi', 'Causa', 'CHAR')
+    FALAB_DB.add_col('Analisi', 'Responsabilità', 'CHAR')
+    FALAB_DB.add_col('Analisi', 'Semilavorato', 'CHAR')
+    FALAB_DB.add_col('Analisi', 'Note', 'LONGCHAR')
     # Definizione colonne Category
     # Definizione colonne Immagini
     # Definizione colonne Eventi
