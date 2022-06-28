@@ -1,48 +1,121 @@
-
-Screen:
-
-    MDCard:
-        size_hint: None,None
-        size: 300,400
-        pos_hint:{'center_x':0.5,'center_y':0.5}
-        elevation: 30
-        spacing: 20
-        orientation: 'vertical'
-
-        MDLabel:
-            text: 'Welcome'
-            font_size: 18
-            size_hint_y: None
-            height:100
-            halign: 'center'
-        MDTextFieldRound:
-            id: "Username_input"
-            size_hint_x: None
-            width:200
+ScreenManager:
+    Screen:
+        name:'Log-in_screen'
+        MDCard:
+            size_hint: None,None
+            size: 300,400
             pos_hint:{'center_x':0.5,'center_y':0.5}
-            hint_text: "Username"
-            icon_right: "account"
-        MDTextFieldRound:
-            id: 'Password_input'
-            size_hint_x: None
-            width:200
+            elevation: 30
+            spacing: 20
+            orientation: 'vertical'
+
+            MDLabel:
+                text: 'Welcome'
+                font_size: 18
+                size_hint_y: None
+                height:100
+                halign: 'center'
+            MDTextFieldRound:
+                id: "Username_input"
+                size_hint_x: None
+                width:200
+                pos_hint:{'center_x':0.5,'center_y':0.5}
+                hint_text: "Username"
+                icon_right: "account"
+            MDTextFieldRound:
+                id: 'Password_input'
+                size_hint_x: None
+                width:200
+                pos_hint:{'center_x':0.5,'center_y':0.5}
+                hint_text: "Password"
+                icon_right: "key-variant"
+            MDRoundFlatButton:
+                id: 'Submit_button'
+                pos_hint: {'center_x':0.5,'center_y':0.5}
+                text:"[u]Submit[/u]"
+                size_hint_x:None
+                width: 200
+            MDRoundFlatButton:
+                id: 'New_user'
+                pos_hint: {'center_x':0.5,'center_y':0.5}
+                text:"[u]New_User[/u]"
+                size_hint_x:None
+                width: 200
+                on_release: app.root.current = 'new_user'
+            MDLabel:
+                pos_hint: {'center_x':0.5,'center_y':0.5}
+                size_hint_y:None
+                height:50
+    Screen:
+        name: 'new_user'
+        MDFloatingActionButton:
+            icon: 'keyboard-return'
+            icon_size: '20sp'
+        MDCard:
+            size_hint: None,None
+            size: 500,400
             pos_hint:{'center_x':0.5,'center_y':0.5}
-            hint_text: "Password"
-            icon_right: "key-variant"
-        MDRoundFlatButton:
-            id: 'Submit_button'
-            pos_hint: {'center_x':0.5,'center_y':0.5}
-            text:"[u]Submit[/u]"
-            size_hint_x:None
-            width: 200
-        MDRoundFlatButton:
-            id: 'New_user'
-            pos_hint: {'center_x':0.5,'center_y':0.5}
-            text:"[u]New_User[/u]"
-            size_hint_x:None
-            width: 200
-            on_release: app.button_screen()
-        MDLabel:
-            pos_hint: {'center_x':0.5,'center_y':0.5}
-            size_hint_y:None
-            height:50
+            elevation: 30
+            spacing: 20
+            orientation: 'vertical'
+            MDLabel:
+                id: 'title_new_user_card'
+                pos_hint: {'center_x':0.5,'center_y':0.5}
+                halign: 'center'
+                size_hint_y:None
+                height:50
+                text: 'New User creation'
+            GridLayout:
+                cols: 2
+                MDLabel:
+                    text: 'Nome'
+                MDTextField:
+                    id: 'Nome_input'
+                    helper_text_mode: "on_error"
+                    helper_text: "Field required"
+                    required: 'True'
+
+                MDLabel:
+                    text: 'Cognome'
+                MDTextField:
+                    id: 'Congnome_input'
+                    helper_text_mode: "on_error"
+                    helper_text: "Field required"
+                    required: 'True'
+
+                MDLabel:
+                    text: 'Username'
+                MDTextField:
+                    id: 'Nome_input'
+                    helper_text_mode: "on_error"
+                    helper_text: "Field required"
+                    required: 'True'
+
+                MDLabel:
+                    text: 'Password'
+                MDTextField:
+                    id: 'new_password_input'
+                    helper_text_mode: "on_error"
+                    helper_text: "Field required"
+                    required: 'True'
+                MDLabel:
+                    text: 'Confirm Password'
+                MDTextField:
+                    id: 'new_password_confirm'
+                    helper_text_mode: "on_error"
+                    helper_text: "Field required"
+                    required: 'True'
+            MDLabel:
+                pos_hint: {'center_x':0.5,'center_y':0.5}
+                size_hint_y:None
+                height:2
+            MDRoundFlatButton:
+                id: 'user_creation'
+                pos_hint: {'center_x':0.5,'center_y':0.5}
+                text:"[u]Register[/u]"
+                size_hint_x:None
+                width: 200
+            MDLabel:
+                pos_hint: {'center_x':0.5,'center_y':0.5}
+                size_hint_y:None
+                height:2

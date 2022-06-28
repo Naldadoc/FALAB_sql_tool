@@ -27,8 +27,18 @@ class FALAB_DatabaseApp(MDApp):
         self.theme_cls.accent_palette = 'Yellow'
         self.theme_cls.theme_style = 'Dark'
         return
-    def button_screen(self):
-        print_hi('Ciao')
+    def Log_in(self):
+        '''
+        Esegue il log in del programma
+        :return:
+        '''
+        return
+
+    def add_user(self):
+        '''
+        Aggiunge il nuovo utente al database
+        :return:
+        '''
         return
     pass
 
@@ -50,15 +60,15 @@ if __name__ == '__main__':
     FALAB_DB.create_table('Immagini')
     FALAB_DB.create_table('Eventi')
     # Definizione colonne Utenti
-    FALAB_DB.add_col('Utenti','Nome','CHAR', 'NOT NULL DEFAULT \'Missing\'')
+    FALAB_DB.add_col('Utenti', 'Nome', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
     FALAB_DB.add_col('Utenti', 'Cognome', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
     FALAB_DB.add_col('Utenti', 'Username', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
     FALAB_DB.add_col('Utenti', 'Password', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
     FALAB_DB.add_col('Utenti', 'Privilegi', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
 
     # Definizione colonne Analisi
-    FALAB_DB.add_col('Analisi','Data','DATETIME')
-    FALAB_DB.add_col('Analisi','Utente','CHAR')
+    FALAB_DB.add_col('Analisi', 'Data','DATETIME')
+    FALAB_DB.add_col('Analisi', 'Utente', 'CHAR')
     FALAB_DB.add_col('Analisi', 'Care', 'INT','NOT NULL DEFAULT \'00000000\'')
     FALAB_DB.add_col('Analisi', 'Part_Number', 'CHAR')
     FALAB_DB.add_col('Analisi', 'Serial_Number', 'INT', 'NOT NULL DEFAULT \'0000000000\'')
@@ -68,10 +78,25 @@ if __name__ == '__main__':
     FALAB_DB.add_col('Analisi', 'Responsabilità', 'CHAR')
     FALAB_DB.add_col('Analisi', 'Semilavorato', 'CHAR')
     FALAB_DB.add_col('Analisi', 'Note', 'LONGCHAR')
-    # Definizione colonne Category
-    # Definizione colonne Immagini
-    # Definizione colonne Eventi
+    FALAB_DB.add_col('Analisi', 'Report', 'MEDIUMBLOB')
 
+    # Definizione colonne Category
+    FALAB_DB.add_col('Category', 'Difetto', 'CHAR')
+    FALAB_DB.add_col('Category', 'Sub_Group', 'CHAR')
+    FALAB_DB.add_col('Category', 'Causa', 'CHAR')
+    FALAB_DB.add_col('Category', 'Responsabilità', 'CHAR')
+
+    # Definizione colonne Immagini
+    FALAB_DB.add_col('Immagini', 'Care', 'INT', 'NOT NULL DEFAULT \'00000000\'')
+    FALAB_DB.add_col('Immagini', 'Serial_Number', 'INT', 'NOT NULL DEFAULT \'0000000000\'')
+    FALAB_DB.add_col('Immagini', 'Cosmetica', 'MEDIUMBLOB')
+    FALAB_DB.add_col('Immagini', 'Analisi', 'MEDIUMBLOB')
+
+    # Definizione colonne Eventi
+    FALAB_DB.add_col('Eventi', 'Care', 'INT', 'NOT NULL DEFAULT \'00000000\'')
+    FALAB_DB.add_col('Eventi', 'Serial_Number', 'INT', 'NOT NULL DEFAULT \'0000000000\'')
+    FALAB_DB.add_col('Eventi', 'Log_Eventi', 'MEDIUMBLOB')
+    FALAB_DB.add_col('Eventi', 'Statistiche', 'MEDIUMBLOB')
     # Inserimento utente Base
     record_base = {'Nome':'Admin','Cognome':'root','Username':'admin','Password':'Root','Privilegi':'admin'}
     l = FALAB_DB.search_loc('Utenti', 'Nome', 'Admin')
