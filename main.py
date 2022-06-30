@@ -7,8 +7,8 @@ import platform
 import sqlite_creator
 import os
 import kivy
+from kivy.lang import Builder
 from kivymd.app import MDApp
-
 
 #global variables
 system = platform.system()

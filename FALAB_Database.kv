@@ -8,7 +8,6 @@ ScreenManager:
             elevation: 30
             spacing: 20
             orientation: 'vertical'
-
             MDLabel:
                 text: 'Welcome'
                 font_size: 18
@@ -51,7 +50,7 @@ ScreenManager:
         MDFloatingActionButton:
             icon: 'keyboard-return'
             icon_size: '20sp'
-            on_release: app.root.current = 'Log-in_screen'
+            on_release:app.root.current = 'Log-in_screen'
         MDCard:
             size_hint: None,None
             size: 500,400
@@ -75,7 +74,6 @@ ScreenManager:
                     helper_text_mode: "on_error"
                     helper_text: "Field required"
                     required: 'True'
-
                 MDLabel:
                     text: 'Cognome'
                 MDTextField:
@@ -83,7 +81,6 @@ ScreenManager:
                     helper_text_mode: "on_error"
                     helper_text: "Field required"
                     required: 'True'
-
                 MDLabel:
                     text: 'Username'
                 MDTextField:
@@ -91,7 +88,6 @@ ScreenManager:
                     helper_text_mode: "on_error"
                     helper_text: "Field required"
                     required: 'True'
-
                 MDLabel:
                     text: 'Password'
                 MDTextField:
