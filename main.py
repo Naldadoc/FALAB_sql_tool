@@ -6,8 +6,8 @@
 import platform
 import sqlite_creator
 import os
-import kivy
 from kivy.lang import Builder
+from kivy.properties import StringProperty
 from kivymd.app import MDApp
 
 #global variables
@@ -22,11 +22,15 @@ else:
     pass
 
 class FALAB_DatabaseApp(MDApp):
+
     def build(self):
         self.theme_cls.primary_palette = 'Blue'
         self.theme_cls.accent_palette = 'Yellow'
         self.theme_cls.theme_style = 'Dark'
+        self.prev_screen = StringProperty()
+
         return
+
     def Log_in(self):
         '''
         Esegue il log in del programma
@@ -39,6 +43,17 @@ class FALAB_DatabaseApp(MDApp):
         Aggiunge il nuovo utente al database
         :return:
         '''
+        return
+
+    def set_screen(self, next_scr):
+        self.prev_screen = self.root.current
+        self.root.current = next_scr
+        print("old:{x} and new: {y}".format(x = self.prev_screen,y=next_scr))
+        return
+
+    def test_previous_screen(self):
+
+        self.root.current = self.prev_screen
         return
     pass
 

@@ -1,56 +1,69 @@
 ScreenManager:
+    id: "window_manager"
+    size_hint: 1,1
     Screen:
         name:'Log-in_screen'
-        MDCard:
-            size_hint: None,None
-            size: 300,400
-            pos_hint:{'center_x':0.5,'center_y':0.5}
-            elevation: 30
-            spacing: 20
-            orientation: 'vertical'
-            MDLabel:
-                text: 'Welcome'
-                font_size: 18
-                size_hint_y: None
-                height:100
-                halign: 'center'
-            MDTextFieldRound:
-                id: "Username_input"
-                size_hint_x: None
-                width:200
+        BoxLayout:
+            orientation: "vertical"
+            MDToolbar:
+                elevation:10
+                title: "FALAB Database"
+            MDCard:
+                size_hint: None,None
+                size: 300,400
                 pos_hint:{'center_x':0.5,'center_y':0.5}
-                hint_text: "Username"
-                icon_right: "account"
-            MDTextFieldRound:
-                id: 'Password_input'
-                size_hint_x: None
-                width:200
-                pos_hint:{'center_x':0.5,'center_y':0.5}
-                hint_text: "Password"
-                icon_right: "key-variant"
-            MDRoundFlatButton:
-                id: 'Submit_button'
-                pos_hint: {'center_x':0.5,'center_y':0.5}
-                text:"[u]Submit[/u]"
-                size_hint_x:None
-                width: 200
-            MDRoundFlatButton:
-                id: 'New_user'
-                pos_hint: {'center_x':0.5,'center_y':0.5}
-                text:"[u]New_User[/u]"
-                size_hint_x:None
-                width: 200
-                on_release: app.root.current = 'new_user'
-            MDLabel:
-                pos_hint: {'center_x':0.5,'center_y':0.5}
-                size_hint_y:None
-                height:50
+                elevation: 30
+                spacing: 20
+                orientation: 'vertical'
+                MDLabel:
+                    text: 'Welcome'
+                    font_size: 18
+                    size_hint_y: None
+                    height:100
+                    halign: 'center'
+                MDTextFieldRound:
+                    id: "Username_input"
+                    size_hint_x: None
+                    width:200
+                    pos_hint:{'center_x':0.5,'center_y':0.5}
+                    hint_text: "Username"
+                    icon_right: "account"
+                MDTextFieldRound:
+                    id: 'Password_input'
+                    size_hint_x: None
+                    width:200
+                    pos_hint:{'center_x':0.5,'center_y':0.5}
+                    hint_text: "Password"
+                    icon_right: "key-variant"
+                MDRoundFlatButton:
+                    id: 'Submit_button'
+                    pos_hint: {'center_x':0.5,'center_y':0.5}
+                    text:"[u]Submit[/u]"
+                    size_hint_x:None
+                    width: 200
+                    on_release: app.set_screen('Logged-in page')#app.root.current = 'Logged-in page'
+                MDRoundFlatButton:
+                    id: 'New_user'
+                    pos_hint: {'center_x':0.5,'center_y':0.5}
+                    text:"[u]New_User[/u]"
+                    size_hint_x:None
+                    width: 200
+                    on_release: app.set_screen('new_user')#app.root.current = 'new_user'
+                MDLabel:
+                    pos_hint: {'center_x':0.5,'center_y':0.5}
+                    size_hint_y:None
+                    height:50
     Screen:
         name: 'new_user'
+        MDToolbar:
+            elevation:10
+            title: "FALAB Database"
+            left_action_items: [['keyboard-return',lambda x: app.test_previous_screen()]]
         MDFloatingActionButton:
             icon: 'keyboard-return'
             icon_size: '20sp'
-            on_release:app.root.current = 'Log-in_screen'
+            pos_hint: {"center_x": 0.5, "center_y": 0}
+            on_release: app.set_screen('Log-in_screen')
         MDCard:
             size_hint: None,None
             size: 500,400
@@ -116,3 +129,11 @@ ScreenManager:
                 pos_hint: {'center_x':0.5,'center_y':0.5}
                 size_hint_y:None
                 height:2
+    Screen:
+        name: 'Logged-in page'
+        MDToolbar:
+            elevation:10
+            title: "FALAB Database"
+            left_action_items: [['keyboard-return',lambda x: app.test_previous_screen()]]
+        MDNavigationDrawer:
+        ScreenManager:
