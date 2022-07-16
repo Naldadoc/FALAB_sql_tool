@@ -46,6 +46,7 @@ class FALAB_DatabaseApp(MDApp):
         return
 
     def set_screen(self, next_scr):
+
         self.prev_screen = self.root.current
         self.root.current = next_scr
         print("old:{x} and new: {y}".format(x = self.prev_screen,y=next_scr))
