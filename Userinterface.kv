@@ -1,0 +1,63 @@
+#New file with revised user interface
+<UserInterface>:
+    orientation:"vertical"
+    BaseTitleBar:
+    MDNavigationLayout:
+        ScreenManager:
+            id: root_screen
+            Screen:
+                name: "Log_in_Screen"
+                BoxLayout:
+                    orientation: "vertical"
+                    MDCard:
+                        size_hint: None,None
+                        size: 300,400
+                        pos_hint:{'center_x':0.5,'center_y':0.5}
+                        elevation: 30
+                        spacing: 20
+                        orientation: 'vertical'
+                        MDLabel:
+                            text: "Welcome"
+                            font_size: 18
+                            size_hint_y: None
+                            height:100
+                            halign: 'center'
+                        MDTextFieldRound:
+                            id: Username_input
+                            size_hint_x: None
+                            width:200
+                            pos_hint:{'center_x':0.5,'center_y':0.5}
+                            hint_text: "Username"
+                            icon_right: "account"
+                        MDTextFieldRound:
+                            id: Password_input
+                            size_hint_x: None
+                            width:200
+                            pos_hint:{'center_x':0.5,'center_y':0.5}
+                            hint_text: "Password"
+                            icon_right: "key-variant"
+                        MDRoundFlatButton:
+                            id: SubmitButton
+                            pos_hint: {'center_x':0.5,'center_y':0.5}
+                            text:"[u]Submit[/u]"
+                            size_hint_x:None
+                            width: 200
+                            on_release: nav_drw.set_state("toggle")
+                        MDRoundFlatButton:
+                            id: New_user
+                            pos_hint: {'center_x':0.5,'center_y':0.5}
+                            text:"[u]New_User[/u]"
+                            size_hint_x:None
+                            width: 200
+                            on_release:
+                        MDLabel:
+                            pos_hint: {'center_x':0.5,'center_y':0.5}
+                            size_hint_y:None
+                            height:50
+            Screen:
+                name: "new_user"
+            Screen:
+                name: "Logged_in"
+
+        MDNavigationDrawer:
+            id:nav_drw
