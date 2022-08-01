@@ -2,6 +2,7 @@
 <UserInterface>:
     orientation:"vertical"
     BaseTitleBar:
+        left_action_items: [["menu",lambda x: nav_drw.set_state("toggle")]]
     MDNavigationLayout:
         ScreenManager:
             id: root_screen

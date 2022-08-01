@@ -7,7 +7,7 @@ import platform
 import sqlite_creator
 import os
 from kivy.lang import Builder
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty,ListProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
@@ -69,6 +69,7 @@ class FALAB_DatabaseApp(MDApp):
 
 class UserInterface(BoxLayout):
     pass
+
 
 class BaseTitleBar(MDToolbar):
     pass
