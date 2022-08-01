@@ -16,12 +16,11 @@
                         elevation: 30
                         spacing: 20
                         orientation: 'vertical'
-                        MDLabel:
-                            text: "Welcome"
-                            font_size: 18
-                            size_hint_y: None
-                            height:100
-                            halign: 'center'
+                        Image:
+                            id:image_logo
+                            source:"Logo.png"
+                            size_hint: 0.4,0.4
+                            pos_hint:{'center_x':0.5,'center_y':0.5}
                         MDTextFieldRound:
                             id: Username_input
                             size_hint_x: None
@@ -42,22 +41,22 @@
                             text:"[u]Submit[/u]"
                             size_hint_x:None
                             width: 200
-                            on_release: nav_drw.set_state("toggle")
+                            on_release: root_screen.current = 'Logged_in_interface' #nav_drw.set_state("toggle")
                         MDRoundFlatButton:
                             id: New_user
                             pos_hint: {'center_x':0.5,'center_y':0.5}
                             text:"[u]New_User[/u]"
                             size_hint_x:None
                             width: 200
-                            on_release:
+                            on_release: root_screen.current = 'new_user'
                         MDLabel:
                             pos_hint: {'center_x':0.5,'center_y':0.5}
                             size_hint_y:None
                             height:50
-            Screen:
-                name: "new_user"
-            Screen:
-                name: "Logged_in"
-
+                    MDLabel:
+                        size_hint_y: None
+                        height: 50
+            New_user:
+            Logged_in_interface:
         MDNavigationDrawer:
             id:nav_drw

@@ -1,0 +1,68 @@
+<New_user>:
+    name: 'new_user'
+    MDCard:
+        id: new_user_card
+        size_hint: None,None
+        size: 500,400
+        pos_hint:{'center_x':0.5,'center_y':0.5}
+        elevation: 30
+        spacing: 20
+        orientation: 'vertical'
+        MDLabel:
+            id: new_user_title
+            pos_hint: {'center_x':0.5,'center_y':0.5}
+            halign: 'center'
+            size_hint_y:None
+            height:50
+            text: 'New User creation'
+        GridLayout:
+            cols: 2
+            MDLabel:
+                text: 'Nome'
+            MDTextField:
+                id: Nome_input
+                helper_text_mode: "on_error"
+                helper_text: "Field required"
+                required: 'True'
+            MDLabel:
+                text: 'Cognome'
+            MDTextField:
+                id: Congnome_input
+                helper_text_mode: "on_error"
+                helper_text: "Field required"
+                required: 'True'
+            MDLabel:
+                text: 'Username'
+            MDTextField:
+                id: Username_input
+                helper_text_mode: "on_error"
+                helper_text: "Field required"
+                required: 'True'
+            MDLabel:
+                text: 'Password'
+            MDTextField:
+                id: New_password_input
+                helper_text_mode: "on_error"
+                helper_text: "Field required"
+                required: 'True'
+            MDLabel:
+                text: 'Confirm Password'
+            MDTextField:
+                id: New_password_confirm
+                helper_text_mode: "on_error"
+                helper_text: "Field required"
+                required: 'True'
+        MDLabel:
+            pos_hint: {'center_x':0.5,'center_y':0.5}
+            size_hint_y:None
+            height:2
+        MDRoundFlatButton:
+            id: User_creation
+            pos_hint: {'center_x':0.5,'center_y':0.5}
+            text:"[u]Register[/u]"
+            size_hint_x:None
+            width: 200
+        MDLabel:
+            pos_hint: {'center_x':0.5,'center_y':0.5}
+            size_hint_y:None
+            height:2

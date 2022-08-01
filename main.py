@@ -8,6 +8,7 @@ import sqlite_creator
 import os
 from kivy.lang import Builder
 from kivy.properties import StringProperty
+from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 from kivymd.uix.toolbar import MDToolbar
@@ -25,17 +26,17 @@ else:
     pass
 
 
-
-
 class FALAB_DatabaseApp(MDApp):
 
     def build(self):
-        self.theme_cls.primary_palette = 'Blue'
-        self.theme_cls.accent_palette = 'Yellow'
-        self.theme_cls.theme_style = 'Dark'
+        self.theme_cls.primary_palette = 'Red'
+        self.theme_cls.accent_palette = 'BlueGray'
+        self.theme_cls.theme_style = 'Light'
         self.prev_screen = StringProperty()
         Builder.load_file("Userinterface.kv")
         Builder.load_file("BaseTitleBar.kv")
+        Builder.load_file("New_user.kv")
+        Builder.load_file("Logged_in_interface.kv")
         return UserInterface()
 
     def Log_in(self):
@@ -70,6 +71,12 @@ class UserInterface(BoxLayout):
     pass
 
 class BaseTitleBar(MDToolbar):
+    pass
+
+class New_user(Screen):
+    pass
+
+class Logged_in_interface(Screen):
     pass
 
 def print_hi(name):
