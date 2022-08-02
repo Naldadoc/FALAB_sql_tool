@@ -32,11 +32,11 @@ class FALAB_DatabaseApp(MDApp):
         self.theme_cls.primary_palette = 'Red'
         self.theme_cls.accent_palette = 'BlueGray'
         self.theme_cls.theme_style = 'Light'
-        self.prev_screen = StringProperty()
         Builder.load_file("Userinterface.kv")
         Builder.load_file("BaseTitleBar.kv")
         Builder.load_file("New_user.kv")
         Builder.load_file("Logged_in_interface.kv")
+        Builder.load_file("Log_in_screen.kv")
         return UserInterface()
 
     def Log_in(self):
@@ -59,11 +59,6 @@ class FALAB_DatabaseApp(MDApp):
         self.root.ids.root_screen.current = next_scr
         print("old:{x} and new: {y}".format(x = self.prev_screen,y=next_scr))
         return
-
-    def test_previous_screen(self):
-
-        self.root.current = self.prev_screen
-        return
     pass
 
 
@@ -75,6 +70,12 @@ class BaseTitleBar(MDToolbar):
     root_screen = ObjectProperty()
 
     def set_elements(self,current_screen):
+        '''
+
+        :param current_screen: The current active screen
+        :return:
+        The function change the Toolbar dinamically basing on the active screen
+        '''
         if current_screen == "new_user":
             self.right_action_items= []
             self.right_action_items = [["arrow-left-thick",lambda x: MDApp.get_running_app().set_screen("Log_in_Screen")]]
@@ -91,23 +92,18 @@ class BaseTitleBar(MDToolbar):
 
 
 class New_user(Screen):
-
-    basetitlebar = ObjectProperty()
     pass
 
 
 class Logged_in_interface(Screen):
     pass
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print('Hi, {name}'.format(name=name))  # Press Ctrl+F8 to toggle the breakpoint.
-    return
-# Press the green button in the gutter to run the script.
+
+class Log_in_screen(Screen):
+    pass
+
 
 if __name__ == '__main__':
-
-    print_hi('PyCharm run on {system} OS'.format(system=system))
     # create new db
     FALAB_DB = sqlite_creator.DB_sqlite(PATH,'FALAB_db.db',separatore)
     # create tabelle

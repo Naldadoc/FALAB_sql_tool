@@ -8,64 +8,20 @@
     MDNavigationLayout:
         ScreenManager:
             id: root_screen
-            Screen:
-                name: "Log_in_Screen"
+            Log_in_screen:
                 basetitlebar:basetitlebar
+                root_screen: root_screen
+                name: "Log_in_Screen"
                 on_pre_enter: basetitlebar.set_elements(root_screen.current)
-                BoxLayout:
-                    orientation: "vertical"
-                    MDCard:
-                        size_hint: None,None
-                        size: 300,400
-                        pos_hint:{'center_x':0.5,'center_y':0.5}
-                        elevation: 30
-                        spacing: 20
-                        orientation: 'vertical'
-                        Image:
-                            id:image_logo
-                            source:"Logo.png"
-                            size_hint: 0.4,0.4
-                            pos_hint:{'center_x':0.5,'center_y':0.5}
-                        MDTextFieldRound:
-                            id: Username_input
-                            size_hint_x: None
-                            width:200
-                            pos_hint:{'center_x':0.5,'center_y':0.5}
-                            hint_text: "Username"
-                            icon_right: "account"
-                        MDTextFieldRound:
-                            id: Password_input
-                            size_hint_x: None
-                            width:200
-                            pos_hint:{'center_x':0.5,'center_y':0.5}
-                            hint_text: "Password"
-                            icon_right: "key-variant"
-                        MDRoundFlatButton:
-                            id: SubmitButton
-                            pos_hint: {'center_x':0.5,'center_y':0.5}
-                            text:"[u]Submit[/u]"
-                            size_hint_x:None
-                            width: 200
-                            on_release: root_screen.current = 'Logged_in_interface' #nav_drw.set_state("toggle")
-                        MDRoundFlatButton:
-                            id: New_user
-                            pos_hint: {'center_x':0.5,'center_y':0.5}
-                            text:"[u]New_User[/u]"
-                            size_hint_x:None
-                            width: 200
-                            on_release: root_screen.current = 'new_user'
-                        MDLabel:
-                            pos_hint: {'center_x':0.5,'center_y':0.5}
-                            size_hint_y:None
-                            height:50
-                    MDLabel:
-                        size_hint_y: None
-                        height: 50
             New_user:
                 basetitlebar:basetitlebar
+                root_screen: root_screen
+                name: 'new_user'
                 on_pre_enter: basetitlebar.set_elements(root_screen.current)
             Logged_in_interface:
                 basetitlebar:basetitlebar
+                root_screen: root_screen
+                name:'Logged_in_interface'
                 on_pre_enter: basetitlebar.set_elements(root_screen.current)
         MDNavigationDrawer:
             id:nav_drw
