@@ -68,6 +68,7 @@ class UserInterface(BoxLayout):
 
 class BaseTitleBar(MDToolbar):
     root_screen = ObjectProperty()
+    nav_drw = ObjectProperty()
 
     def set_elements(self,current_screen):
         '''
@@ -78,14 +79,18 @@ class BaseTitleBar(MDToolbar):
         '''
         if current_screen == "new_user":
             self.right_action_items= []
-            self.right_action_items = [["arrow-left-thick",lambda x: MDApp.get_running_app().set_screen("Log_in_Screen")]]
+            self.right_action_items = [["arrow-left-thick",lambda x: MDApp.get_running_app().set_screen("Log_in_Screen")],
+                                       ["menu",lambda x: self.nav_drw.set_state("toggle")]]
             pass
         elif current_screen == 'Logged_in_interface':
             self.right_action_items = []
-            self.right_action_items = [["logout", lambda x: MDApp.get_running_app().set_screen("Log_in_Screen")]]
+            self.left_action_items = []
+            self.right_action_items = [["arrow-left-thick", lambda x: MDApp.get_running_app().set_screen("Log_in_Screen")],
+                ["menu", lambda x: self.nav_drw.set_state("toggle")]]
             pass
         else:
             self.right_action_items = []
+            self.left_action_items = []
             pass
         return
     pass
