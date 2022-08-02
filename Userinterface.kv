@@ -5,9 +5,12 @@
         id:basetitlebar
         root_screen:root_screen
         nav_drw:nav_drw
+        md_list:md_list
+
     MDNavigationLayout:
         ScreenManager:
             id: root_screen
+            md_list:md_list
             Log_in_screen:
                 basetitlebar:basetitlebar
                 root_screen: root_screen
@@ -25,3 +28,10 @@
                 on_pre_enter: basetitlebar.set_elements(root_screen.current)
         MDNavigationDrawer:
             id:nav_drw
+            BoxLayout:
+                orientation: "vertical"
+                padding: "8dp"
+                spacing: "8dp"
+                ScrollView:
+                    NavDrawerContent:
+                        id: md_list

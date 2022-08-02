@@ -12,6 +12,8 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
 from kivymd.uix.toolbar import MDToolbar
+from kivymd.uix.list import MDList
+from kivymd.uix.list import OneLineIconListItem
 
 
 #global variables
@@ -37,6 +39,7 @@ class FALAB_DatabaseApp(MDApp):
         Builder.load_file("New_user.kv")
         Builder.load_file("Logged_in_interface.kv")
         Builder.load_file("Log_in_screen.kv")
+        Builder.load_file("NavDrawerContent.kv")
         return UserInterface()
 
     def Log_in(self):
@@ -69,6 +72,7 @@ class UserInterface(BoxLayout):
 class BaseTitleBar(MDToolbar):
     root_screen = ObjectProperty()
     nav_drw = ObjectProperty()
+    md_list = ObjectProperty()
 
     def set_elements(self,current_screen):
         '''
@@ -105,6 +109,29 @@ class Logged_in_interface(Screen):
 
 
 class Log_in_screen(Screen):
+    pass
+
+
+class NavDrawerContent(MDList):
+
+    def build(self):
+        self.list_items = dict()
+        return
+
+    def set_items(self):
+        for i in self.list_items.keys():
+            self.add_widget(OneLineIconListItem(text = self.list_items[i],icon = i,))
+            pass
+        return
+
+    def clicked(self,icon_clicked):
+        '''
+
+        :param icon_clicked: key of dict of icons
+        :return:
+        The function will all the proper method for screen managing
+        '''
+        return
     pass
 
 
