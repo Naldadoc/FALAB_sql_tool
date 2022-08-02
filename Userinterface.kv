@@ -2,12 +2,16 @@
 <UserInterface>:
     orientation:"vertical"
     BaseTitleBar:
+        id:basetitlebar
+        root_screen:root_screen
         left_action_items: [["menu",lambda x: nav_drw.set_state("toggle")]]
     MDNavigationLayout:
         ScreenManager:
             id: root_screen
             Screen:
                 name: "Log_in_Screen"
+                basetitlebar:basetitlebar
+                on_pre_enter: basetitlebar.set_elements(root_screen.current)
                 BoxLayout:
                     orientation: "vertical"
                     MDCard:
@@ -58,6 +62,10 @@
                         size_hint_y: None
                         height: 50
             New_user:
+                basetitlebar:basetitlebar
+                on_pre_enter: basetitlebar.set_elements(root_screen.current)
             Logged_in_interface:
+                basetitlebar:basetitlebar
+                on_pre_enter: basetitlebar.set_elements(root_screen.current)
         MDNavigationDrawer:
             id:nav_drw

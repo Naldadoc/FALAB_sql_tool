@@ -7,7 +7,7 @@ import platform
 import sqlite_creator
 import os
 from kivy.lang import Builder
-from kivy.properties import StringProperty,ListProperty
+from kivy.properties import StringProperty,ListProperty,ObjectProperty
 from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivymd.app import MDApp
@@ -55,8 +55,8 @@ class FALAB_DatabaseApp(MDApp):
 
     def set_screen(self, next_scr):
 
-        self.prev_screen = self.root.current
-        self.root.current = next_scr
+        self.prev_screen = self.root.ids.root_screen.current
+        self.root.ids.root_screen.current = next_scr
         print("old:{x} and new: {y}".format(x = self.prev_screen,y=next_scr))
         return
 
@@ -72,10 +72,29 @@ class UserInterface(BoxLayout):
 
 
 class BaseTitleBar(MDToolbar):
+    root_screen = ObjectProperty()
+
+    def set_elements(self,current_screen):
+        if current_screen == "new_user":
+            self.right_action_items= []
+            self.right_action_items = [["arrow-left-thick",lambda x: MDApp.get_running_app().set_screen("Log_in_Screen")]]
+            pass
+        elif current_screen == 'Logged_in_interface':
+            self.right_action_items = []
+            self.right_action_items = [["logout", lambda x: MDApp.get_running_app().set_screen("Log_in_Screen")]]
+            pass
+        else:
+            self.right_action_items = []
+            pass
+        return
     pass
 
+
 class New_user(Screen):
+
+    basetitlebar = ObjectProperty()
     pass
+
 
 class Logged_in_interface(Screen):
     pass
