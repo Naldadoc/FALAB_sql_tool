@@ -53,6 +53,8 @@ class FALAB_DatabaseApp(MDApp):
         :return:
         '''
         print(username ,' + ', password)
+        self.root.ids.root_screen.get_screen('Log_in_Screen').ids.Username_input.text = ''
+        self.root.ids.root_screen.get_screen('Log_in_Screen').ids.Password_input.text = ''
         return
 
     def add_user(self):
