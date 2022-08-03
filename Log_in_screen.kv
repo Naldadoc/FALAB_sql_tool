@@ -27,13 +27,14 @@
                 pos_hint:{'center_x':0.5,'center_y':0.5}
                 hint_text: "Password"
                 icon_right: "key-variant"
+                password: True
             MDRoundFlatButton:
                 id: SubmitButton
                 pos_hint: {'center_x':0.5,'center_y':0.5}
                 text:"[u]Submit[/u]"
                 size_hint_x:None
                 width: 200
-                on_release: root.root_screen.current = 'Logged_in_interface'
+                on_release: app.Log_in(Username_input.text,Password_input.text)#root.root_screen.current = 'Logged_in_interface'
             MDRoundFlatButton:
                 id: New_user
                 pos_hint: {'center_x':0.5,'center_y':0.5}

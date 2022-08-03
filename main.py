@@ -16,16 +16,21 @@ from kivymd.uix.list import MDList
 from kivymd.uix.list import OneLineIconListItem
 
 
-#global variables
+
+# global variables
 system = platform.system()
 PATH = os.getcwd()
-#Manage different OS
+
+# Manage different OS
 if system == 'Windows':
     separatore = '\\'
     pass
 else:
     separatore = '/'
     pass
+
+FALAB_DB = sqlite_creator.DB_sqlite(PATH,'FALAB_db.db',separatore)
+
 
 
 class FALAB_DatabaseApp(MDApp):
@@ -42,11 +47,12 @@ class FALAB_DatabaseApp(MDApp):
         Builder.load_file("NavDrawerContent.kv")
         return UserInterface()
 
-    def Log_in(self):
+    def Log_in(self, username, password):
         '''
         Esegue il log in del programma
         :return:
         '''
+        print(username ,' + ', password)
         return
 
     def add_user(self):
@@ -83,8 +89,7 @@ class BaseTitleBar(MDToolbar):
         '''
         if current_screen == "new_user":
             self.right_action_items= []
-            self.right_action_items = [["arrow-left-thick",lambda x: MDApp.get_running_app().set_screen("Log_in_Screen")],
-                                       ["menu",lambda x: self.nav_drw.set_state("toggle")]]
+            self.right_action_items = [["arrow-left-thick",lambda x: MDApp.get_running_app().set_screen("Log_in_Screen")]]
             pass
         elif current_screen == 'Logged_in_interface':
             self.right_action_items = []
@@ -125,16 +130,19 @@ class NavDrawerContent(MDList):
         '''
         #Define the navigation drawer list basing on user credential
         if priviliges == 'Admin':
-            items = {'database-plus':'Add Record','database-edit':'Edit Record','database-export':'Export',
+            items = {'database-export':'Export','database-remove':'Remove Record',
                      'account-plus':'Add User','account-remove':'Remove User','table-large-plus': "Add Table",
                      "table-remove": "Remove Table",'table-row-plus-after':'Add New Category',
-                     'table-row-remove':'Remove Category','table-arrow-left':'Import Category Table','table-arrow-right':'Export Category Table'}
+                     'table-row-remove':'Remove Category','table-arrow-left':'Import Category Table',
+                     'table-arrow-right':'Export Category Table','logout':'Logout'}
             pass
         elif priviliges == 'Quality':
-            items = {}
+            items = {'database-export': 'Export','database-remove':'Remove Record', 'table-row-plus-after': 'Add New Category',
+                     'table-row-remove': 'Remove Category',
+                     'table-arrow-right': 'Export Category Table','logout':'Logout'}
             pass
         else:
-            items = {}
+            items = {'logout':'Logout'}
             pass
         self.clear_widgets()
         self.list_items = items
@@ -161,9 +169,10 @@ class List_item(OneLineIconListItem):
     pass
 
 
+
 if __name__ == '__main__':
     # create new db
-    FALAB_DB = sqlite_creator.DB_sqlite(PATH,'FALAB_db.db',separatore)
+
     # create tabelle
     FALAB_DB.create_table('Analisi')
     FALAB_DB.create_table('Category')
@@ -210,9 +219,13 @@ if __name__ == '__main__':
     FALAB_DB.add_col('Eventi', 'Statistiche', 'MEDIUMBLOB')
     # Inserimento utente Base
     record_base = {'Nome':'Admin','Cognome':'root','Username':'admin','Password':'Root','Privilegi':'admin'}
+    record_quality_test ={'Nome':'Quality','Cognome':'Process','Username':'Quality','Password':'Quality','Privilegi':'Quality'}
+    record_repair_test = {'Nome':'Rework','Cognome':'Repair','Username':'Rework','Password':'Production','Privilegi':'Production'}
     l = FALAB_DB.search_loc('Utenti', 'Nome', 'Admin')
     if not l:
         FALAB_DB.insert_record('Utenti', record_base)
+        FALAB_DB.insert_record('Utenti', record_quality_test)
+        FALAB_DB.insert_record('Utenti', record_repair_test)
         pass
     records = FALAB_DB.show_records('Utenti')
     print(records)

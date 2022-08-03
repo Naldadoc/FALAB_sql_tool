@@ -1,1 +1,64 @@
 <Logged_in_interface>:
+    ScreenManager:
+        id: scr_manager
+        user: "ciao"
+        Screen:
+            name: "first_page"
+            id: first_page
+            BoxLayout:
+                orientation: "vertical"
+                MDCard:
+                    size_hint: None,None
+                    size: 300,400
+                    pos_hint: {"center_x":0.5,"center_y":0.5}
+                    elevation: 30
+                    spacing: 20
+                    orientation: "vertical"
+                    MDLabel:
+                        text: "Welcome"
+                        font_size: 36
+                        pos_hint: {"center_x":0.5,"center_y":0.5}
+                        size_hint_y: None
+                        height: 70
+                        halign: "center"
+                    MDLabel:
+                        id: Logged_user_label
+                        pos_hint: {"center_x":0.5,"center_y":0.5}
+                        size_hint_y: None
+                        height: 15
+                        text: scr_manager.user
+                        font_size: 18
+                        halign: "center"
+                    MDLabel:
+                        pos_hint: {"center_x":0.5,"center_y":0.5}
+                        size_hint_y: None
+                        height: 30
+                        text: "Choose an Action:"
+                        halign: "center"
+                        font_size: 18
+                    MDRoundFlatIconButton:
+                        icon:'database-plus'
+                        text: 'Add Record'
+                        pos_hint: {"center_x":0.5,"center_y":0.5}
+                        size_hint_y:None
+                        height:15
+                    MDRoundFlatIconButton:
+                        icon:'database-edit'
+                        text: 'Edit Record'
+                        pos_hint: {"center_x":0.5,"center_y":0.5}
+                        size_hint_y:None
+                        height:15
+                    MDRoundFlatIconButton:
+                        icon:"database-search"
+                        text: "Search Record"
+                        pos_hint: {"center_x":0.5,"center_y":0.5}
+                        size_hint_y:None
+                        height:15
+                    MDLabel:
+                        pos_hint: {"center_x":0.5,"center_y":0.5}
+                        size_hint_y: None
+                        height: 30
+                MDLabel:
+                    pos_hint: {"center_x":0.5,"center_y":0.5}
+                    size_hint_y: None
+                    height: 60
