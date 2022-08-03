@@ -91,6 +91,7 @@ class BaseTitleBar(MDToolbar):
             self.left_action_items = []
             self.right_action_items = [["arrow-left-thick", lambda x: MDApp.get_running_app().set_screen("Log_in_Screen")],
                 ["menu", lambda x: self.nav_drw.set_state("toggle")]]
+            self.md_list.set_items("Admin")
             pass
         else:
             self.right_action_items = []
@@ -113,14 +114,32 @@ class Log_in_screen(Screen):
 
 
 class NavDrawerContent(MDList):
+    list_items = {}
 
-    def build(self):
-        self.list_items = dict()
-        return
+    def set_items(self,priviliges):
+        '''
 
-    def set_items(self):
+        :param priviliges: String parameter which define the number of element of nav drawer
+        :return:
+        The function each time the user log-in show only the nav drawer on priviliges bases
+        '''
+        #Define the navigation drawer list basing on user credential
+        if priviliges == 'Admin':
+            items = {'database-plus':'Add Record','database-edit':'Edit Record','database-export':'Export',
+                     'account-plus':'Add User','account-remove':'Remove User','table-large-plus': "Add Table",
+                     "table-remove": "Remove Table",'table-row-plus-after':'Add New Category',
+                     'table-row-remove':'Remove Category','table-arrow-left':'Import Category Table','table-arrow-right':'Export Category Table'}
+            pass
+        elif priviliges == 'Quality':
+            items = {}
+            pass
+        else:
+            items = {}
+            pass
+        self.clear_widgets()
+        self.list_items = items
         for i in self.list_items.keys():
-            self.add_widget(OneLineIconListItem(text = self.list_items[i],icon = i,))
+            self.add_widget(List_item(text = self.list_items[i],icon = i))
             pass
         return
 
@@ -131,7 +150,14 @@ class NavDrawerContent(MDList):
         :return:
         The function will all the proper method for screen managing
         '''
+
+        print ("clicked icon {x}".format(x = icon_clicked))
         return
+    pass
+
+
+class List_item(OneLineIconListItem):
+    icon = StringProperty()
     pass
 
 

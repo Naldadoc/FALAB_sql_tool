@@ -1,4 +1,6 @@
 <NavDrawerContent>:
 
-<List_item@OneLineIconListItem>:
-    on_release: root.clicked(self.icon)
+<List_item>:
+    on_release: root.parent.clicked(self.icon)
+    IconLeftWidget:
+        icon: root.icon
