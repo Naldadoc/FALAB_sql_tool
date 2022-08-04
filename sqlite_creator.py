@@ -174,28 +174,35 @@ class DB_sqlite():
         db.close()
         return
 
-    def show_records(self,table, loc=0):
+    def show_records(self,table,loc=0, col = '*', ):
         '''
         :param loc: indice da visualizzare di defaul 0
         :param table: Nome tabella type STRING
+        :param col: Nome della colonna da estrarre (tutte di default)
         :return: tabella completa
         '''
         # Connessione al Database
         db = sqlite3.connect('{path}{separatore}{db}'.format(path=self.path,separatore=self.separatore,db = self.db_name))
         #creazione del cursore
         cursor_db = db.cursor()
+        out =[]
         #SQL command
         if loc == 0:
 
             cursor_db.execute('SELECT * FROM {table}'.format(table=table))
+            list = cursor_db.fetchall()
             pass
         else:
-            cursor_db.execute('SELECT * FROM {table} WHERE {table}.id = {loc}'.format(table=table,loc=loc))
+            for i in loc:
+                cursor_db.execute('SELECT {col} FROM {table} WHERE {table}.id = {loc}'.format(table=table,loc=i,col = col))
+                list = cursor_db.fetchall()
+                pass
             pass
-
-        list = cursor_db.fetchall()
         db.close()
-        return list
+        for i in list:
+            out.append(i[0])
+            pass
+        return out
 
     def search_loc(self, table, col, condition):
         '''

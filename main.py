@@ -14,6 +14,8 @@ from kivymd.app import MDApp
 from kivymd.uix.toolbar import MDToolbar
 from kivymd.uix.list import MDList
 from kivymd.uix.list import OneLineIconListItem
+from kivymd.uix.textfield import MDTextFieldRound,MDTextField
+from kivy.uix.behaviors import FocusBehavior
 
 
 
@@ -34,7 +36,7 @@ FALAB_DB = sqlite_creator.DB_sqlite(PATH,'FALAB_db.db',separatore)
 
 
 class FALAB_DatabaseApp(MDApp):
-
+    privilege = StringProperty()
     def build(self):
         self.theme_cls.primary_palette = 'Red'
         self.theme_cls.accent_palette = 'BlueGray'
@@ -52,9 +54,24 @@ class FALAB_DatabaseApp(MDApp):
         Esegue il log in del programma
         :return:
         '''
-        print(username ,' + ', password)
+        user_loc = int()
+        pass_check = bool()
+        user_data = []
         self.root.ids.root_screen.get_screen('Log_in_Screen').ids.Username_input.text = ''
         self.root.ids.root_screen.get_screen('Log_in_Screen').ids.Password_input.text = ''
+        user_loc = FALAB_DB.search_loc('Utenti','Username',username)
+        if user_loc !=[]:
+            user_data = FALAB_DB.show_records('Utenti', user_loc, "Privilegi")
+            pass
+        if user_data != []:
+
+            self.privilege = user_data[0]
+            self.root.ids.root_screen.current = 'Logged_in_interface'
+            pass
+        else:
+            self.root.ids.root_screen.get_screen('Log_in_Screen').ids.info_label.text = 'Wrong username or password'
+            pass
+
         return
 
     def add_user(self):
@@ -98,7 +115,7 @@ class BaseTitleBar(MDToolbar):
             self.left_action_items = []
             self.right_action_items = [["arrow-left-thick", lambda x: MDApp.get_running_app().set_screen("Log_in_Screen")],
                 ["menu", lambda x: self.nav_drw.set_state("toggle")]]
-            self.md_list.set_items("Admin")
+            self.md_list.set_items(MDApp.get_running_app().privilege)
             pass
         else:
             self.right_action_items = []
@@ -123,7 +140,7 @@ class Log_in_screen(Screen):
 class NavDrawerContent(MDList):
     list_items = {}
 
-    def set_items(self,priviliges):
+    def set_items(self, priviliges):
         '''
 
         :param priviliges: String parameter which define the number of element of nav drawer
@@ -170,6 +187,11 @@ class List_item(OneLineIconListItem):
     icon = StringProperty()
     pass
 
+
+class UI_MDtextfieldRound(MDTextFieldRound, FocusBehavior):
+    pass
+class UI_textfield(MDTextField, FocusBehavior):
+    pass
 
 
 if __name__ == '__main__':

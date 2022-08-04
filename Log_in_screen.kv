@@ -13,14 +13,14 @@
                 source:"Logo.png"
                 size_hint: 0.4,0.4
                 pos_hint:{'center_x':0.5,'center_y':0.5}
-            MDTextFieldRound:
+            UI_MDtextfieldRound:
                 id: Username_input
                 size_hint_x: None
                 width:200
                 pos_hint:{'center_x':0.5,'center_y':0.5}
                 hint_text: "Username"
                 icon_right: "account"
-            MDTextFieldRound:
+            UI_MDtextfieldRound:
                 id: Password_input
                 size_hint_x: None
                 width:200
@@ -43,8 +43,11 @@
                 width: 200
                 on_release: root.root_screen.current = 'new_user'
             MDLabel:
+                id: info_label
                 pos_hint: {'center_x':0.5,'center_y':0.5}
                 size_hint_y:None
+                halign:'center'
+                font_size: 14
                 height:50
         MDLabel:
             size_hint_y: None
