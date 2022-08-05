@@ -200,7 +200,12 @@ class DB_sqlite():
             pass
         db.close()
         for i in list:
-            out.append(i[0])
+            if col == '*':
+                out.append(i)
+                pass
+            else:
+                out.append(i[0])
+
             pass
         return out
 

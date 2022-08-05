@@ -4,3 +4,5 @@
     on_release: root.parent.clicked(self.icon)
     IconLeftWidget:
         icon: root.icon
+        on_release: self.parent.parent.dispatch('on_release')
+

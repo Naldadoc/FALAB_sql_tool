@@ -14,45 +14,80 @@
             size_hint_y:None
             height:50
             text: 'New User creation'
+            bold: True
         GridLayout:
             cols: 2
+            pos_hint:{'x': root.x,'y': root.y-new_user_title.y}
+
             MDLabel:
                 text: 'Nome'
-            UI_textfield:
+                size_hint_y:None
+                height: 30
+            MDTextField:
                 id: Nome_input
-                md_bg_color:"light"
+                size_hint_y:None
+                height: 30
+                multiline: False
+                write_tab: False
                 helper_text_mode: "on_error"
                 helper_text: "Field required"
                 required: 'True'
             MDLabel:
                 text: 'Cognome'
-            UI_textfield:
+                size_hint_y:None
+                height: 30
+            MDTextField:
                 id: Congnome_input
+                size_hint_y:None
+                height: 30
                 helper_text_mode: "on_error"
                 helper_text: "Field required"
                 required: 'True'
+                multiline: False
+                write_tab: False
             MDLabel:
                 text: 'Username'
-            UI_textfield:
+                size_hint_y:None
+                height: 30
+            MDTextField:
                 id: Username_input
+                size_hint_y:None
+                height: 30
                 helper_text_mode: "on_error"
                 helper_text: "Field required"
                 required: 'True'
+                multiline: False
+                write_tab: False
+            MDLabel:
+                text: 'E-Mail'
+                size_hint_y:None
+                height: 30
+            MDTextField:
+                id: e_mail
+                size_hint_y:None
+                height: 30
+                helper_text_mode: "on_error"
+                helper_text: "Field required"
+                required: 'True'
+                multiline: False
+                write_tab: False
             MDLabel:
                 text: 'Password'
-            UI_textfield:
+                size_hint_y:None
+                height: 30
+            MDTextField:
                 id: New_password_input
+                size_hint_y:None
+                height: 30
                 helper_text_mode: "on_error"
                 helper_text: "Field required"
                 required: 'True'
-            MDLabel:
-                text: 'Confirm Password'
-            UI_textfield:
-                id: New_password_confirm
-                helper_text_mode: "on_error"
-                helper_text: "Field required"
-                required: 'True'
-
+                multiline: False
+                write_tab: False
+        BoxLayout:
+            MDCheckbox:
+            MDCheckbox:
+            MDCheckbox:
         MDLabel:
             pos_hint: {'center_x':0.5,'center_y':0.5}
             size_hint_y:None
@@ -63,7 +98,7 @@
             text:"[u]Register[/u]"
             size_hint_x:None
             width: 200
-            on_release: app.add_user
+            on_release: app.add_user(Nome_input.text,Congnome_input.text,Username_input.text,e_mail.text,New_password_input.text)
         MDLabel:
             pos_hint: {'center_x':0.5,'center_y':0.5}
             size_hint_y:None

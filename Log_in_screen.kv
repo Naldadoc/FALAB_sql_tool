@@ -13,18 +13,22 @@
                 source:"Logo.png"
                 size_hint: 0.4,0.4
                 pos_hint:{'center_x':0.5,'center_y':0.5}
-            UI_MDtextfieldRound:
+            MDTextFieldRound:
                 id: Username_input
                 size_hint_x: None
                 width:200
                 pos_hint:{'center_x':0.5,'center_y':0.5}
+                multiline:False
+                write_tab: False
                 hint_text: "Username"
                 icon_right: "account"
-            UI_MDtextfieldRound:
+            MDTextFieldRound:
                 id: Password_input
                 size_hint_x: None
                 width:200
                 pos_hint:{'center_x':0.5,'center_y':0.5}
+                multiline: False
+                write_tab: False
                 hint_text: "Password"
                 icon_right: "key-variant"
                 password: True
@@ -35,20 +39,13 @@
                 size_hint_x:None
                 width: 200
                 on_release: app.Log_in(Username_input.text,Password_input.text)#root.root_screen.current = 'Logged_in_interface'
-            MDRoundFlatButton:
-                id: New_user
-                pos_hint: {'center_x':0.5,'center_y':0.5}
-                text:"[u]New_User[/u]"
-                size_hint_x:None
-                width: 200
-                on_release: root.root_screen.current = 'new_user'
             MDLabel:
                 id: info_label
                 pos_hint: {'center_x':0.5,'center_y':0.5}
                 size_hint_y:None
                 halign:'center'
                 font_size: 14
-                height:50
+                height:100
         MDLabel:
             size_hint_y: None
             height: 50

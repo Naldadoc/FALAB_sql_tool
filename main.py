@@ -14,9 +14,6 @@ from kivymd.app import MDApp
 from kivymd.uix.toolbar import MDToolbar
 from kivymd.uix.list import MDList
 from kivymd.uix.list import OneLineIconListItem
-from kivymd.uix.textfield import MDTextFieldRound,MDTextField
-from kivy.uix.behaviors import FocusBehavior
-
 
 
 # global variables
@@ -31,16 +28,17 @@ else:
     separatore = '/'
     pass
 
-FALAB_DB = sqlite_creator.DB_sqlite(PATH,'FALAB_db.db',separatore)
+SQL_DB = sqlite_creator.DB_sqlite(PATH,'SQL_db.db',separatore)
 
 
 
-class FALAB_DatabaseApp(MDApp):
+class SQL_DatabaseApp(MDApp):
     privilege = StringProperty()
     def build(self):
         self.theme_cls.primary_palette = 'Red'
         self.theme_cls.accent_palette = 'BlueGray'
         self.theme_cls.theme_style = 'Light'
+        self.title = 'SQL_Tool'
         Builder.load_file("Userinterface.kv")
         Builder.load_file("BaseTitleBar.kv")
         Builder.load_file("New_user.kv")
@@ -59,9 +57,10 @@ class FALAB_DatabaseApp(MDApp):
         user_data = []
         self.root.ids.root_screen.get_screen('Log_in_Screen').ids.Username_input.text = ''
         self.root.ids.root_screen.get_screen('Log_in_Screen').ids.Password_input.text = ''
-        user_loc = FALAB_DB.search_loc('Utenti','Username',username)
+        self.root.ids.root_screen.get_screen('Log_in_Screen').ids.info_label.text = ''
+        user_loc = SQL_DB.search_loc('Utenti','Username',username)
         if user_loc !=[]:
-            user_data = FALAB_DB.show_records('Utenti', user_loc, "Privilegi")
+            user_data = SQL_DB.show_records('Utenti', user_loc, "Privilegi")
             pass
         if user_data != []:
 
@@ -74,7 +73,7 @@ class FALAB_DatabaseApp(MDApp):
 
         return
 
-    def add_user(self):
+    def add_user(self,nome,cognome,username,email,password,privilegi):
         '''
         Aggiunge il nuovo utente al database
         :return:
@@ -108,18 +107,16 @@ class BaseTitleBar(MDToolbar):
         '''
         if current_screen == "new_user":
             self.right_action_items= []
-            self.right_action_items = [["arrow-left-thick",lambda x: MDApp.get_running_app().set_screen("Log_in_Screen")]]
+            self.right_action_items = [["menu", lambda x: self.nav_drw.set_state("toggle")]]
+            self.md_list.set_items(MDApp.get_running_app().privilege)
             pass
         elif current_screen == 'Logged_in_interface':
             self.right_action_items = []
-            self.left_action_items = []
-            self.right_action_items = [["arrow-left-thick", lambda x: MDApp.get_running_app().set_screen("Log_in_Screen")],
-                ["menu", lambda x: self.nav_drw.set_state("toggle")]]
+            self.right_action_items = [["menu", lambda x: self.nav_drw.set_state("toggle")]]
             self.md_list.set_items(MDApp.get_running_app().privilege)
             pass
         else:
             self.right_action_items = []
-            self.left_action_items = []
             pass
         return
     pass
@@ -148,7 +145,7 @@ class NavDrawerContent(MDList):
         The function each time the user log-in show only the nav drawer on priviliges bases
         '''
         #Define the navigation drawer list basing on user credential
-        if priviliges == 'Admin':
+        if priviliges == 'admin':
             items = {'database-export':'Export','database-remove':'Remove Record',
                      'account-plus':'Add User','account-remove':'Remove User','table-large-plus': "Add Table",
                      "table-remove": "Remove Table",'table-row-plus-after':'Add New Category',
@@ -156,7 +153,7 @@ class NavDrawerContent(MDList):
                      'table-arrow-right':'Export Category Table','logout':'Logout'}
             pass
         elif priviliges == 'Quality':
-            items = {'database-export': 'Export','database-remove':'Remove Record', 'table-row-plus-after': 'Add New Category',
+            items = {'account-plus':'Add User','database-export': 'Export','database-remove':'Remove Record', 'table-row-plus-after': 'Add New Category',
                      'table-row-remove': 'Remove Category',
                      'table-arrow-right': 'Export Category Table','logout':'Logout'}
             pass
@@ -179,6 +176,32 @@ class NavDrawerContent(MDList):
         '''
 
         print ("clicked icon {x}".format(x = icon_clicked))
+        if icon_clicked == "logout": # Logout
+            MDApp.get_running_app().set_screen("Log_in_Screen")
+            pass
+        elif icon_clicked == "table-arrow-right": # import Category
+            pass
+        elif icon_clicked == "table-arrow-left": # Export Category
+            pass
+        elif icon_clicked == "table-row-remove": # Remove Category
+            pass
+        elif icon_clicked == "table-row-plus-after": #Add New Category
+            pass
+        elif icon_clicked == "table-remove": #Remove Table
+            pass
+        elif icon_clicked == "table-large-plus": #Add Table
+            pass
+        elif icon_clicked == "account-remove": #Remove User
+            pass
+        elif icon_clicked == "account-plus": #Add User
+            MDApp.get_running_app().set_screen("new_user")
+            pass
+        elif icon_clicked == "database-remove": #Remove Record
+            pass
+        elif icon_clicked == "database-export": #Export
+            pass
+        else:
+            pass
         return
     pass
 
@@ -187,72 +210,67 @@ class List_item(OneLineIconListItem):
     icon = StringProperty()
     pass
 
-
-class UI_MDtextfieldRound(MDTextFieldRound, FocusBehavior):
-    pass
-class UI_textfield(MDTextField, FocusBehavior):
-    pass
-
-
 if __name__ == '__main__':
-    # create new db
+
 
     # create tabelle
-    FALAB_DB.create_table('Analisi')
-    FALAB_DB.create_table('Category')
-    FALAB_DB.create_table('Utenti')
-    FALAB_DB.create_table('Immagini')
-    FALAB_DB.create_table('Eventi')
+    SQL_DB.create_table('Analisi')
+    SQL_DB.create_table('Category')
+    SQL_DB.create_table('Utenti')
+    SQL_DB.create_table('Immagini')
+    SQL_DB.create_table('Eventi')
     # Definizione colonne Utenti
-    FALAB_DB.add_col('Utenti', 'Nome', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
-    FALAB_DB.add_col('Utenti', 'Cognome', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
-    FALAB_DB.add_col('Utenti', 'Username', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
-    FALAB_DB.add_col('Utenti', 'Password', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
-    FALAB_DB.add_col('Utenti', 'Privilegi', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
+    SQL_DB.add_col('Utenti', 'Nome', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
+    SQL_DB.add_col('Utenti', 'Cognome', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
+    SQL_DB.add_col('Utenti', 'Username', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
+    SQL_DB.add_col('Utenti', 'Password', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
+    SQL_DB.add_col('Utenti','Email','CHAR')
+    SQL_DB.add_col('Utenti', 'Privilegi', 'CHAR', 'NOT NULL DEFAULT \'Missing\'')
 
     # Definizione colonne Analisi
-    FALAB_DB.add_col('Analisi', 'Data','DATETIME')
-    FALAB_DB.add_col('Analisi', 'Utente', 'CHAR')
-    FALAB_DB.add_col('Analisi', 'Care', 'INT','NOT NULL DEFAULT \'00000000\'')
-    FALAB_DB.add_col('Analisi', 'Part_Number', 'CHAR')
-    FALAB_DB.add_col('Analisi', 'Serial_Number', 'INT', 'NOT NULL DEFAULT \'0000000000\'')
-    FALAB_DB.add_col('Analisi', 'Difetto', 'CHAR')
-    FALAB_DB.add_col('Analisi', 'Sub_Group', 'CHAR')
-    FALAB_DB.add_col('Analisi', 'Causa', 'CHAR')
-    FALAB_DB.add_col('Analisi', 'Responsabilità', 'CHAR')
-    FALAB_DB.add_col('Analisi', 'Semilavorato', 'CHAR')
-    FALAB_DB.add_col('Analisi', 'Note', 'LONGCHAR')
-    FALAB_DB.add_col('Analisi', 'Report', 'MEDIUMBLOB')
+    SQL_DB.add_col('Analisi', 'Data','DATETIME')
+    SQL_DB.add_col('Analisi', 'Utente', 'CHAR')
+    SQL_DB.add_col('Analisi', 'Care', 'INT','NOT NULL DEFAULT \'00000000\'')
+    SQL_DB.add_col('Analisi', 'Part_Number', 'CHAR')
+    SQL_DB.add_col('Analisi', 'Serial_Number', 'INT', 'NOT NULL DEFAULT \'0000000000\'')
+    SQL_DB.add_col('Analisi', 'Difetto', 'CHAR')
+    SQL_DB.add_col('Analisi', 'Sub_Group', 'CHAR')
+    SQL_DB.add_col('Analisi', 'Causa', 'CHAR')
+    SQL_DB.add_col('Analisi', 'Responsabilità', 'CHAR')
+    SQL_DB.add_col('Analisi', 'Semilavorato', 'CHAR')
+    SQL_DB.add_col('Analisi', 'Note', 'LONGCHAR')
+    SQL_DB.add_col('Analisi', 'Report', 'MEDIUMBLOB')
 
     # Definizione colonne Category
-    FALAB_DB.add_col('Category', 'Difetto', 'CHAR')
-    FALAB_DB.add_col('Category', 'Sub_Group', 'CHAR')
-    FALAB_DB.add_col('Category', 'Causa', 'CHAR')
-    FALAB_DB.add_col('Category', 'Responsabilità', 'CHAR')
+    SQL_DB.add_col('Category', 'Difetto', 'CHAR')
+    SQL_DB.add_col('Category', 'Sub_Group', 'CHAR')
+    SQL_DB.add_col('Category', 'Causa', 'CHAR')
+    SQL_DB.add_col('Category', 'Responsabilità', 'CHAR')
 
     # Definizione colonne Immagini
-    FALAB_DB.add_col('Immagini', 'Care', 'INT', 'NOT NULL DEFAULT \'00000000\'')
-    FALAB_DB.add_col('Immagini', 'Serial_Number', 'INT', 'NOT NULL DEFAULT \'0000000000\'')
-    FALAB_DB.add_col('Immagini', 'Cosmetica', 'MEDIUMBLOB')
-    FALAB_DB.add_col('Immagini', 'Analisi', 'MEDIUMBLOB')
+    SQL_DB.add_col('Immagini', 'Care', 'INT', 'NOT NULL DEFAULT \'00000000\'')
+    SQL_DB.add_col('Immagini', 'Serial_Number', 'INT', 'NOT NULL DEFAULT \'0000000000\'')
+    SQL_DB.add_col('Immagini', 'Cosmetica', 'MEDIUMBLOB')
+    SQL_DB.add_col('Immagini', 'Analisi', 'MEDIUMBLOB')
 
     # Definizione colonne Eventi
-    FALAB_DB.add_col('Eventi', 'Care', 'INT', 'NOT NULL DEFAULT \'00000000\'')
-    FALAB_DB.add_col('Eventi', 'Serial_Number', 'INT', 'NOT NULL DEFAULT \'0000000000\'')
-    FALAB_DB.add_col('Eventi', 'Log_Eventi', 'MEDIUMBLOB')
-    FALAB_DB.add_col('Eventi', 'Statistiche', 'MEDIUMBLOB')
+    SQL_DB.add_col('Eventi', 'Care', 'INT', 'NOT NULL DEFAULT \'00000000\'')
+    SQL_DB.add_col('Eventi', 'Serial_Number', 'INT', 'NOT NULL DEFAULT \'0000000000\'')
+    SQL_DB.add_col('Eventi', 'Log_Eventi', 'MEDIUMBLOB')
+    SQL_DB.add_col('Eventi', 'Statistiche', 'MEDIUMBLOB')
     # Inserimento utente Base
-    record_base = {'Nome':'Admin','Cognome':'root','Username':'admin','Password':'Root','Privilegi':'admin'}
-    record_quality_test ={'Nome':'Quality','Cognome':'Process','Username':'Quality','Password':'Quality','Privilegi':'Quality'}
-    record_repair_test = {'Nome':'Rework','Cognome':'Repair','Username':'Rework','Password':'Production','Privilegi':'Production'}
-    l = FALAB_DB.search_loc('Utenti', 'Nome', 'Admin')
+    record_base = {'Nome':'Andrea','Cognome':'Naldini','Username':'Naldadoc','Email':'andrea.naldini@it.abb.com',
+                   'Password':'Root','Privilegi':'admin'}
+    record_quality_test ={'Nome':'Quality','Cognome':'Process','Username':'Quality','Password':'Quality','Email':'Quality.test@it.abb.com','Privilegi':'Quality'}
+    record_repair_test = {'Nome':'Rework','Cognome':'Repair','Username':'Rework','Password':'Production','Email':'Quality.test@it.abb.com','Privilegi':'Production'}
+    l = SQL_DB.search_loc('Utenti', 'Nome', 'Admin')
     if not l:
-        FALAB_DB.insert_record('Utenti', record_base)
-        FALAB_DB.insert_record('Utenti', record_quality_test)
-        FALAB_DB.insert_record('Utenti', record_repair_test)
+        SQL_DB.insert_record('Utenti', record_base)
+        SQL_DB.insert_record('Utenti', record_quality_test)
+        SQL_DB.insert_record('Utenti', record_repair_test)
         pass
-    records = FALAB_DB.show_records('Utenti')
+    records = SQL_DB.show_records('Utenti')
     print(records)
-    FALAB_DatabaseApp().run()
+    SQL_DatabaseApp().run()
     pass
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
