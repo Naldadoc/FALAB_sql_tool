@@ -1,3 +1,4 @@
+
 <New_user>:
     MDCard:
         id: new_user_card
@@ -15,79 +16,108 @@
             height:50
             text: 'New User creation'
             bold: True
-        GridLayout:
-            cols: 2
-            pos_hint:{'x': root.x,'y': root.y-new_user_title.y}
-
-            MDLabel:
-                text: 'Nome'
-                size_hint_y:None
-                height: 30
-            MDTextField:
-                id: Nome_input
-                size_hint_y:None
-                height: 30
-                multiline: False
-                write_tab: False
-                helper_text_mode: "on_error"
-                helper_text: "Field required"
-                required: 'True'
-            MDLabel:
-                text: 'Cognome'
-                size_hint_y:None
-                height: 30
-            MDTextField:
-                id: Congnome_input
-                size_hint_y:None
-                height: 30
-                helper_text_mode: "on_error"
-                helper_text: "Field required"
-                required: 'True'
-                multiline: False
-                write_tab: False
-            MDLabel:
-                text: 'Username'
-                size_hint_y:None
-                height: 30
-            MDTextField:
-                id: Username_input
-                size_hint_y:None
-                height: 30
-                helper_text_mode: "on_error"
-                helper_text: "Field required"
-                required: 'True'
-                multiline: False
-                write_tab: False
-            MDLabel:
-                text: 'E-Mail'
-                size_hint_y:None
-                height: 30
-            MDTextField:
-                id: e_mail
-                size_hint_y:None
-                height: 30
-                helper_text_mode: "on_error"
-                helper_text: "Field required"
-                required: 'True'
-                multiline: False
-                write_tab: False
-            MDLabel:
-                text: 'Password'
-                size_hint_y:None
-                height: 30
-            MDTextField:
-                id: New_password_input
-                size_hint_y:None
-                height: 30
-                helper_text_mode: "on_error"
-                helper_text: "Field required"
-                required: 'True'
-                multiline: False
-                write_tab: False
         BoxLayout:
-            MDCheckbox:
-            MDCheckbox:
-            MDCheckbox:
+            orientation: 'horizontal'
+            spacing: 15
+            GridLayout:
+                cols: 2
+                pos_hint: {'x': 0}
+                MDLabel:
+                    text: 'Nome'
+                    halign: 'center'
+                    valign: 'center'
+                    size_hint_y:None
+                    height: 30
+                MDTextField:
+                    id: Nome_input
+                    size_hint_y:None
+                    height: 30
+                    multiline: False
+                    write_tab: False
+                    helper_text_mode: "on_error"
+                    helper_text: "Field required"
+                    required: 'True'
+                MDLabel:
+                    text: 'Cognome'
+                    size_hint_y:None
+                    valign: 'center'
+                    halign: 'center'
+                    height: 30
+                MDTextField:
+                    id: Cognome_input
+                    size_hint_y:None
+                    height: 30
+                    helper_text_mode: "on_error"
+                    helper_text: "Field required"
+                    required: 'True'
+                    multiline: False
+                    write_tab: False
+                MDLabel:
+                    text: 'Username'
+                    size_hint_y:None
+                    valign: 'center'
+                    halign: 'center'
+                    height: 30
+                MDTextField:
+                    id: Username_input
+                    size_hint_y:None
+                    height: 30
+                    helper_text_mode: "on_error"
+                    helper_text: "Field required"
+                    required: 'True'
+                    multiline: False
+                    write_tab: False
+                MDLabel:
+                    text: 'E-Mail'
+                    size_hint_y:None
+                    valign: 'center'
+                    halign: 'center'
+                    height: 30
+                MDTextField:
+                    id: e_mail
+                    size_hint_y:None
+                    height: 30
+                    helper_text_mode: "on_error"
+                    helper_text: "Field required"
+                    required: 'True'
+                    multiline: False
+                    write_tab: False
+                MDLabel:
+                    text: 'Password'
+                    halign: 'center'
+                    size_hint_y:None
+                    height: 30
+                MDTextField:
+                    id: New_password_input
+                    size_hint_y:None
+                    height: 30
+                    helper_text_mode: "on_error"
+                    helper_text: "Field required"
+                    required: 'True'
+                    multiline: False
+                    write_tab: False
+            BoxLayout:
+                orientation: 'vertical'
+                MDLabel:
+                    text: 'Privilegi'
+                    halign: 'center'
+                GridLayout:
+                    id: input_credential
+                    cols: 2
+                    pos_hint: {'right':1}
+                    MDLabel:
+                        text: "Quality"
+                        pos_hint:{'x': 0.6}
+                    MDCheckbox:
+                        id: quality_check_btn
+                        group: "privilegi"
+                    MDLabel:
+                        text: "Production"
+                        active: True
+                        pos_hint:{'x': 0.6}
+                    MDCheckbox:
+                        group: 'privilegi'
+                        id: production_check_btn
         MDLabel:
             pos_hint: {'center_x':0.5,'center_y':0.5}
             size_hint_y:None
@@ -98,8 +128,25 @@
             text:"[u]Register[/u]"
             size_hint_x:None
             width: 200
-            on_release: app.add_user(Nome_input.text,Congnome_input.text,Username_input.text,e_mail.text,New_password_input.text)
+            on_release: app.add_user(Nome_input.text,Cognome_input.text,Username_input.text,e_mail.text,New_password_input.text,root.round_active())
         MDLabel:
+            id:service_label
             pos_hint: {'center_x':0.5,'center_y':0.5}
             size_hint_y:None
-            height:2
+            height:10
+
+<Box_Contenent>:
+    orientation: 'vertical'
+    size_hint_y: None
+    height: 80
+    MDFlatButton:
+        text: 'Ok'
+        size_hint: None,None
+        size: 40,40
+        pos_hint:{'right':1,'y':0}
+        on_release: app.mng_dialog(root.parent.parent.parent.title)
+
+<User_dialog>:
+    type: 'custom'
+    size_hint_x:None
+    width: 300
