@@ -5,6 +5,7 @@ This file is a general purpose sqplite db manipulation
 import sqlite3
 
 class DB_sqlite():
+
     def __init__(self,path_db, db_name, separatore):
         '''
 
@@ -209,7 +210,7 @@ class DB_sqlite():
             pass
         return out
 
-    def search_loc(self, table, col, condition):
+    def search_loc(self, table, col, condition, mode ='exact'):
         '''
 
         :param table: tabella in cui eseguire la ricerca type: STRING
@@ -223,7 +224,19 @@ class DB_sqlite():
         #creazione del cursore
         cursor_db = db.cursor()
         # Esecuzione comando di ricerca
-        cursor_db.execute('SELECT {table}.id FROM {table} WHERE {table}.{col} = \'{condition}\''.format(table = table, col = col, condition = condition))
+        if mode == 'exact':
+            cursor_db.execute('SELECT {table}.id FROM {table} WHERE {table}.{col} = \'{condition}\''.format(table = table, col = col, condition = condition))
+            pass
+        elif mode == 'contain':
+            cursor_db.execute(
+                'SELECT {table}.id FROM {table} WHERE {table}.{col} LIKE \'{condition}\''.format(table=table, col=col,
+                                                                                              condition=condition))
+            pass
+        else:
+            cursor_db.execute(
+                'SELECT {table}.id FROM {table} WHERE {table}.{col} = \'{condition}\''.format(table=table, col=col,
+                                                                                              condition=condition))
+            pass
         out = cursor_db.fetchall()
         db.close()
         # Crazione della lista delle posizioni

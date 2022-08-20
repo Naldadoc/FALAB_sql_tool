@@ -47,6 +47,7 @@ class SQL_DatabaseApp(MDApp):
         Builder.load_file("Logged_in_interface.kv")
         Builder.load_file("Log_in_screen.kv")
         Builder.load_file("NavDrawerContent.kv")
+        Builder.load_file("edit_user.kv")
         self.dialog = User_dialog(title = 'User already registered',content_cls = Box_Contenent())
         return UserInterface()
 
@@ -112,12 +113,25 @@ class SQL_DatabaseApp(MDApp):
             pass
         return
 
+    def remove_user(self,loc):
+        return
+
+    def set_user_list_items(self,text):
+
+        user_loc_list = SQL_DB.search_loc('Utenti','Nome',text,'contain')
+        if not user_loc_list:
+            user_list = SQL_DB.search_loc('Utenti', 'Cognome', text, 'contain')
+            pass
+
+        #estrarrelista utenti e mostrarla  video
+        return
+
     def set_screen(self, next_scr):
 
         self.prev_screen = self.root.ids.root_screen.current
         self.root.ids.root_screen.current = next_scr
         print("old:{x} and new: {y}".format(x = self.prev_screen,y=next_scr))
-        self.root.ids.nav_drw.set_state("toggle")
+        self.root.ids.nav_drw.set_state("close")
         return
 
     def mng_dialog(self,title):
@@ -168,6 +182,10 @@ class BaseTitleBar(MDToolbar):
             self.right_action_items = [["menu", lambda x: self.nav_drw.set_state("toggle")]]
             self.md_list.set_items(MDApp.get_running_app().privilege)
             pass
+        elif current_screen == 'edit_user':
+            self.right_action_items = []
+            self.right_action_items = [["keyboard-backspace", lambda x: MDApp.get_running_app().set_screen('Logged_in_interface')]]
+            pass
         else:
             self.right_action_items = []
             pass
@@ -210,6 +228,8 @@ class Logged_in_interface(Screen):
 class Log_in_screen(Screen):
     pass
 
+class Edit_user(Screen):
+    pass
 
 class NavDrawerContent(MDList):
     list_items = {}
@@ -268,6 +288,7 @@ class NavDrawerContent(MDList):
         elif icon_clicked == "table-large-plus": #Add Table
             pass
         elif icon_clicked == "account-remove": #Remove User
+            MDApp.get_running_app().set_screen("edit_user")
             pass
         elif icon_clicked == "account-plus": #Add User
             MDApp.get_running_app().set_screen("new_user")

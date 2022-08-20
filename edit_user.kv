@@ -1,0 +1,18 @@
+<Edit_user>:
+    BoxLayout:
+        orientation: 'vertical'
+        MDTextField:
+            icon_right: 'magnify'
+            mode: 'rectangle'
+            size_hint_x: 0.75
+            pos_hint: {'x': 0.1, 'top': 0.8}
+            hint_text: 'Search users to remove'
+            on_textinput: app.set_user_list_items(self.text)
+        ScrollView:
+            MDList:
+                id: user_list
+        MDRoundFlatButton:
+            text: 'Remove Selected'
+            pos_hint: {'right': 0.85}
+        MDLabel:
+            size_hint_y: 0.1
